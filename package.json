@@ -1,0 +1,15 @@
+{
+  "name": "limeviz",
+  "version": "0.0.1",
+  "description": "Data Visualization Library",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marek Pilczuk",
+  "license": "MIT"
+}
