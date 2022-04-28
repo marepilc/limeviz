@@ -50,6 +50,7 @@ interface AssetsItem {
     src: string;
 }
 export declare let width: number, height: number, keyboard: Keyboard, mouse: Mouse, animation: AnimationCtrl, assets: assetsObject;
+export declare function cursor(display: string): void;
 export declare function lvStart(setup?: () => void, draw?: () => void, events?: () => void, loadAssets?: () => void): void;
 export declare function createCanvas(target: HTMLElement, id?: string): void;
 export declare function selectCanvas(id: string): void;

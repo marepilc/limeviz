@@ -5,6 +5,7 @@ export {
     mouse,
     animation,
     assets,
+    cursor,
     lvStart,
     createCanvas,
     selectCanvas,

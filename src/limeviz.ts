@@ -254,6 +254,10 @@ export let
 let lV: LV;
 let assetList: AssetsItem[] = [];
 
+export function cursor(display: string): void {
+    if (!!lV.canvas) lV.canvas.style.cursor = display;
+}
+
 function setContextDefault(): void {
     if (!!lV.canvas) {
         lV.ctx = lV.canvas.getContext('2d');
@@ -263,8 +267,6 @@ function setContextDefault(): void {
             lV.ctx.fillStyle = lV.currentFill;
             lV.ctx.strokeStyle = lV.currentStroke;
             setFont();
-            // dV.ctx.translate(0, height);
-            // dV.ctx.scale(1, -1);
         }
     }
 }
