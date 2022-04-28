@@ -1,8 +1,8 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.light = exports.quadraticTo = exports.bezierTo = exports.lineTo = exports.moveTo = exports.closeShape = exports.endPath = exports.beginPath = exports.bezier = exports.spline = exports.polygon = exports.star = exports.rect = exports.ring = exports.ellipse = exports.circle = exports.arc = exports.line = exports.point = exports.shadow = exports.noFill = exports.fill = exports.solidLine = exports.dashLine = exports.strokeJoin = exports.JoinStyle = exports.strokeCup = exports.StrokeCupStyle = exports.noStroke = exports.strokeWidth = exports.stroke = exports.background = exports.clear = exports.staticDrawing = exports.restore = exports.save = exports.scale = exports.rotate = exports.translate = exports.resizeCanvas = exports.selectCanvas = exports.createCanvas = exports.lvStart = exports.cursor = exports.assets = exports.animation = exports.mouse = exports.keyboard = exports.height = exports.width = void 0;
-exports.constrain = exports.ceil = exports.floor = exports.round2str = exports.round = exports.hexStr = exports.px2mm = exports.mm2px = exports.str = exports.int = exports.deg2rad = exports.dist = exports.atan2 = exports.atan = exports.acos = exports.asin = exports.tan = exports.cos = exports.sin = exports.PHI = exports.HALF_PI = exports.TWO_PI = exports.PI = exports.E = exports.thousandSep = exports.number2str = exports.textOnArc = exports.lineHeight = exports.fontFamily = exports.fontWeight = exports.fontStyle = exports.textPlacement = exports.TextBaseline = exports.TextAlign = exports.textDim = exports.textWidth = exports.textSize = exports.text = exports.canvas = exports.placeImage = exports.ImgOrigin = exports.randomColor = exports.blend = exports.magenta = exports.blue = exports.red = exports.green = exports.orange = exports.yellow = exports.dark = void 0;
-exports.addAsset = exports.svg2img = exports.print = exports.ordinalScale = exports.linearScale = exports.LinearScale = exports.fibonacci = exports.unique = exports.shuffle = exports.random = exports.choose = exports.randomInt = exports.Noise = exports.Vector = exports.stdDev = exports.SDevMethod = exports.dataRange = exports.iqr = exports.revCentile = exports.centile = exports.avg = exports.sum = exports.min = exports.max = exports.abs = exports.sqrt = exports.pow = exports.sq = void 0;
+exports.quadraticTo = exports.bezierTo = exports.lineTo = exports.moveTo = exports.closeShape = exports.endPath = exports.beginPath = exports.bezier = exports.spline = exports.polyline = exports.polygon = exports.star = exports.rect = exports.ring = exports.ellipse = exports.circle = exports.arc = exports.line = exports.point = exports.shadow = exports.noFill = exports.fill = exports.solidLine = exports.dashLine = exports.strokeJoin = exports.JoinStyle = exports.strokeCup = exports.StrokeCupStyle = exports.noStroke = exports.strokeWidth = exports.stroke = exports.background = exports.clear = exports.staticDrawing = exports.restore = exports.save = exports.scale = exports.rotate = exports.translate = exports.resizeCanvas = exports.selectCanvas = exports.createCanvas = exports.lvStart = exports.cursor = exports.assets = exports.animation = exports.mouse = exports.keyboard = exports.height = exports.width = void 0;
+exports.floor = exports.round2str = exports.round = exports.hexStr = exports.px2mm = exports.mm2px = exports.str = exports.int = exports.deg2rad = exports.dist = exports.atan2 = exports.atan = exports.acos = exports.asin = exports.tan = exports.cos = exports.sin = exports.PHI = exports.HALF_PI = exports.TWO_PI = exports.PI = exports.E = exports.thousandSep = exports.number2str = exports.textOnArc = exports.lineHeight = exports.fontFamily = exports.fontWeight = exports.fontStyle = exports.textPlacement = exports.TextBaseline = exports.TextAlign = exports.textDim = exports.textWidth = exports.textSize = exports.text = exports.canvas = exports.placeImage = exports.ImgOrigin = exports.linearGradient = exports.randomColor = exports.blend = exports.magenta = exports.blue = exports.red = exports.green = exports.orange = exports.yellow = exports.dark = exports.light = void 0;
+exports.addAsset = exports.svg2img = exports.print = exports.ordinalScale = exports.linearScale = exports.LinearScale = exports.fibonacci = exports.unique = exports.shuffle = exports.random = exports.choose = exports.randomInt = exports.Noise = exports.Vector = exports.stdDev = exports.SDevMethod = exports.dataRange = exports.iqr = exports.revCentile = exports.centile = exports.avg = exports.sum = exports.min = exports.max = exports.abs = exports.sqrt = exports.pow = exports.sq = exports.constrain = exports.ceil = void 0;
 // interface ColorRGBA {
 //     r: number,
 //     g: number,
@@ -190,8 +190,6 @@ function setContextDefault() {
             lV.ctx.fillStyle = lV.currentFill;
             lV.ctx.strokeStyle = lV.currentStroke;
             setFont();
-            // dV.ctx.translate(0, height);
-            // dV.ctx.scale(1, -1);
         }
     }
 }
@@ -373,9 +371,16 @@ function solidLine() {
 exports.solidLine = solidLine;
 function fill(v, alpha = 1) {
     lV.withFill = true;
-    if (!!lV.ctx)
-        lV.ctx.fillStyle = color2rgba(v, alpha);
-    lV.currentFill = color2rgba(v, alpha);
+    if (Array.isArray(v) || typeof v === 'string' || typeof v === 'number') {
+        if (!!lV.ctx)
+            lV.ctx.fillStyle = color2rgba(v, alpha);
+        lV.currentFill = color2rgba(v, alpha);
+    }
+    else {
+        if (!!lV.ctx)
+            lV.ctx.fillStyle = v;
+        lV.currentFill = v;
+    }
 }
 exports.fill = fill;
 function noFill() {
@@ -520,6 +525,18 @@ function polygon(x, y, r, n = 5) {
     }
 }
 exports.polygon = polygon;
+function polyline(pts, closed = false) {
+    if (!!lV.ctx) {
+        lV.ctx.beginPath();
+        for (let i = 0; i < pts.length; i += 2) {
+            lV.ctx.lineTo(pts[i], pts[i + 1]);
+        }
+        if (closed)
+            lV.ctx.closePath();
+        lV.commitShape();
+    }
+}
+exports.polyline = polyline;
 function spline(pts, tension = 0.5, closed = false) {
     if (!!lV.ctx) {
         save();
@@ -726,6 +743,15 @@ function randomColor() {
     return '#' + r + g + b;
 }
 exports.randomColor = randomColor;
+function linearGradient(x0, y0, x1, y1) {
+    if (!!lV.ctx) {
+        return lV.ctx.createLinearGradient(x0, y0, x1, y1);
+    }
+    else {
+        return new CanvasGradient;
+    }
+}
+exports.linearGradient = linearGradient;
 /* Assets */
 var ImgOrigin;
 (function (ImgOrigin) {
