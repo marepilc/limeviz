@@ -80,7 +80,7 @@ export declare enum JoinStyle {
 export declare function strokeJoin(style: JoinStyle, miterValue?: number): void;
 export declare function dashLine(line: number, space: number, offset?: number): void;
 export declare function solidLine(): void;
-export declare function fill(v: number[] | string | number, alpha?: number): void;
+export declare function fill(v: number[] | string | number | CanvasGradient, alpha?: number): void;
 export declare function noFill(): void;
 export declare function shadow(level: number, offsetX: number, offsetY: number, v: number[] | string | number, alpha?: number): void;
 export declare function point(x: number, y: number): void;
@@ -92,6 +92,7 @@ export declare function ring(x: number, y: number, r1: number, r2: number, start
 export declare function rect(x: number, y: number, w: number, h: number, r?: number): void;
 export declare function star(x: number, y: number, r1: number, r2: number, n?: number): void;
 export declare function polygon(x: number, y: number, r: number, n?: number): void;
+export declare function polyline(pts: number[], closed?: boolean): void;
 export declare function spline(pts: number[], tension?: number, closed?: boolean): void;
 export declare function bezier(x1: number, y1: number, cp1x: number, cp1y: number, cp2x: number, cp2y: number, x2: number, y2: number): void;
 export declare function beginPath(x: number, y: number): void;
@@ -111,6 +112,10 @@ export declare const blue = "#4DAFEA";
 export declare const magenta = "#B34DFF";
 export declare function blend(color1: string, color2: string, proportion: number): string;
 export declare function randomColor(): string;
+export interface CanvasGradient {
+    addColorStop(offset: number, color: string): void;
+}
+export declare function linearGradient(x0: number, y0: number, x1: number, y1: number): CanvasGradient;
 export declare enum ImgOrigin {
     lb = 0,
     rb = 1,
