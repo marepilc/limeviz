@@ -57,6 +57,7 @@ export {
     red,
     blue,
     magenta,
+    color2rgba,
     blend,
     randomColor,
     CanvasGradient,

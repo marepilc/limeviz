@@ -111,6 +111,7 @@ export declare const green = "#53C352";
 export declare const red = "#E0533D";
 export declare const blue = "#4DAFEA";
 export declare const magenta = "#B34DFF";
+export declare function color2rgba(v: number[] | string | number, alpha?: number): string;
 export declare function blend(color1: string, color2: string, proportion: number): string;
 export declare function randomColor(): string;
 export interface CanvasGradient {

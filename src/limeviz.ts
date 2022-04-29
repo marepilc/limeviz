@@ -715,7 +715,7 @@ export const red = '#E0533D'
 export const blue = '#4DAFEA'
 export const magenta = '#B34DFF'
 
-function color2rgba(v: number[] | string | number, alpha: number=1): string {
+export function color2rgba(v: number[] | string | number, alpha: number=1): string {
     let r: number
     let g: number
     let b: number
