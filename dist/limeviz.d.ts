@@ -21,6 +21,7 @@ declare class Mouse {
     up: () => void;
     click: () => void;
     dblClick: () => void;
+    move: (() => void) | null;
     constructor(canvas: HTMLCanvasElement);
     private _updateMousePos;
     get x(): number;

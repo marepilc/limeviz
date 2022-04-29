@@ -51,8 +51,11 @@ class Mouse {
         this.up = function () { };
         this.click = function () { };
         this.dblClick = function () { };
+        this.move = null;
         this._canvas.addEventListener('mousemove', (e) => {
             this._updateMousePos(canvas, e);
+            if (this.move)
+                this.move();
         });
         this._canvas.addEventListener('wheel', (e) => {
             this._updateMousePos(canvas, e);

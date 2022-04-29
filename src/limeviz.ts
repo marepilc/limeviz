@@ -60,6 +60,7 @@ class Mouse {
     public up: () => void
     public click: () => void
     public dblClick: () => void
+    public move: (() => void) | null
 
     constructor(canvas: HTMLCanvasElement) {
         this._canvas = canvas
@@ -73,9 +74,11 @@ class Mouse {
         this.up = function () {}
         this.click = function () {}
         this.dblClick = function () {}
+        this.move = null
 
         this._canvas.addEventListener('mousemove', (e: MouseEvent) => {
             this._updateMousePos(canvas, e)
+            if (this.move) this.move()
         })
         this._canvas.addEventListener('wheel', (e: WheelEvent) => {
             this._updateMousePos(canvas, e)
