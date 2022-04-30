@@ -1,7 +1,8 @@
 'use strict'
 
 
-import {number2str} from "./limeviz";
+import {number2str} from "./helpers";
+
 
 export function round(x: number, decimal?: number): number { // round
     if (decimal) {
@@ -240,4 +241,22 @@ export class Vector {
             this._y = Math.sin(direction) * limitScalar
         }
     }
+}
+
+export const E = Math.E,
+    PI = Math.PI,
+    TWO_PI = Math.PI * 2,
+    HALF_PI = Math.PI / 2,
+    PHI = (1 + Math.sqrt(5)) / 2
+
+export let sin = Math.sin,
+    cos = Math.cos,
+    tan = Math.tan,
+    asin = Math.asin,
+    acos = Math.acos,
+    atan = Math.atan,
+    atan2 = Math.atan2
+
+export function dist(x1: number, y1: number, x2: number, y2: number): number {
+    return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2))
 }

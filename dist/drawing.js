@@ -1,7 +1,8 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.quadraticTo = exports.bezierTo = exports.lineTo = exports.moveTo = exports.closeShape = exports.endPath = exports.beginPath = exports.bezier = exports.spline = exports.polyline = exports.polygon = exports.star = exports.rect = exports.ring = exports.ellipse = exports.circle = exports.arc = exports.line = exports.point = exports.shadow = exports.noFill = exports.fill = exports.solidLine = exports.dashLine = exports.strokeJoin = exports.JoinStyle = exports.strokeCup = exports.StrokeCupStyle = exports.noStroke = exports.strokeWidth = exports.stroke = exports.background = exports.clear = void 0;
+exports.placeImage = exports.quadraticTo = exports.bezierTo = exports.lineTo = exports.moveTo = exports.closeShape = exports.endPath = exports.beginPath = exports.bezier = exports.spline = exports.polyline = exports.polygon = exports.star = exports.rect = exports.ring = exports.ellipse = exports.circle = exports.arc = exports.line = exports.point = exports.shadow = exports.noFill = exports.fill = exports.solidLine = exports.dashLine = exports.strokeJoin = exports.strokeCup = exports.noStroke = exports.strokeWidth = exports.stroke = exports.background = exports.clear = void 0;
 const limeviz_1 = require("./limeviz");
+const math_1 = require("./math");
 const colors_1 = require("./colors");
 function clear() {
     if (!!limeviz_1.lV.ctx)
@@ -17,7 +18,6 @@ function background(v, alpha = 1) {
     (0, limeviz_1.restore)();
 }
 exports.background = background;
-/* stroke and fill */
 function stroke(v, alpha = 1) {
     limeviz_1.lV.withStroke = true;
     if (!!limeviz_1.lV.ctx)
@@ -35,32 +35,19 @@ function noStroke() {
     limeviz_1.lV.withStroke = false;
 }
 exports.noStroke = noStroke;
-var StrokeCupStyle;
-(function (StrokeCupStyle) {
-    StrokeCupStyle[StrokeCupStyle["butt"] = 0] = "butt";
-    StrokeCupStyle[StrokeCupStyle["round"] = 1] = "round";
-    StrokeCupStyle[StrokeCupStyle["square"] = 2] = "square";
-})(StrokeCupStyle = exports.StrokeCupStyle || (exports.StrokeCupStyle = {}));
 function strokeCup(style) {
-    let types = ['butt', 'round', 'square'];
     if (!!limeviz_1.lV.ctx)
-        limeviz_1.lV.ctx.lineCap = types[style];
+        limeviz_1.lV.ctx.lineCap = style;
 }
 exports.strokeCup = strokeCup;
-var JoinStyle;
-(function (JoinStyle) {
-    JoinStyle[JoinStyle["bevel"] = 0] = "bevel";
-    JoinStyle[JoinStyle["round"] = 1] = "round";
-    JoinStyle[JoinStyle["miter"] = 2] = "miter";
-})(JoinStyle = exports.JoinStyle || (exports.JoinStyle = {}));
 function strokeJoin(style, miterValue = 10) {
-    let types = ['bevel', 'round', 'miter'];
-    if (style === JoinStyle.miter) {
-        if (!!limeviz_1.lV.ctx)
-            limeviz_1.lV.ctx.miterLimit = miterValue;
+    if (!!limeviz_1.lV.ctx) {
+        if (style === 'miter') {
+            if (!!limeviz_1.lV.ctx)
+                limeviz_1.lV.ctx.miterLimit = miterValue;
+        }
+        limeviz_1.lV.ctx.lineJoin = style;
     }
-    if (!!limeviz_1.lV.ctx)
-        limeviz_1.lV.ctx.lineJoin = types[style];
 }
 exports.strokeJoin = strokeJoin;
 function dashLine(line, space, offset = 0) {
@@ -128,7 +115,7 @@ exports.arc = arc;
 function circle(x, y, r) {
     if (!!limeviz_1.lV.ctx) {
         limeviz_1.lV.ctx.beginPath();
-        limeviz_1.lV.ctx.arc(x, y, r, 0, limeviz_1.PI * 2);
+        limeviz_1.lV.ctx.arc(x, y, r, 0, math_1.PI * 2);
         limeviz_1.lV.commitShape();
     }
 }
@@ -139,9 +126,9 @@ function ellipse(x, y, r1, r2, angle = 0) {
         (0, limeviz_1.translate)(x, y);
         (0, limeviz_1.rotate)(angle);
         limeviz_1.lV.ctx.beginPath();
-        for (let i = 0; i < limeviz_1.TWO_PI; i += 0.01) {
-            let xPos = r1 * (0, limeviz_1.cos)(i);
-            let yPos = r2 * (0, limeviz_1.sin)(i);
+        for (let i = 0; i < math_1.TWO_PI; i += 0.01) {
+            let xPos = r1 * (0, math_1.cos)(i);
+            let yPos = r2 * (0, math_1.sin)(i);
             if (i === 0) {
                 limeviz_1.lV.ctx.moveTo(xPos, yPos);
             }
@@ -154,11 +141,11 @@ function ellipse(x, y, r1, r2, angle = 0) {
     }
 }
 exports.ellipse = ellipse;
-function ring(x, y, r1, r2, startAngle = 0, endAngle = limeviz_1.TWO_PI) {
+function ring(x, y, r1, r2, startAngle = 0, endAngle = math_1.TWO_PI) {
     if (!!limeviz_1.lV.ctx) {
         let ro = Math.max(r1, r2);
         let ri = Math.min(r1, r2);
-        if (startAngle === 0 && endAngle === limeviz_1.TWO_PI) {
+        if (startAngle === 0 && endAngle === math_1.TWO_PI) {
             limeviz_1.lV.ctx.beginPath();
             limeviz_1.lV.ctx.arc(x, y, ro, startAngle, endAngle);
             limeviz_1.lV.ctx.arc(x, y, ri, endAngle, startAngle, true);
@@ -201,15 +188,15 @@ function rect(x, y, w, h, r = 0) {
 exports.rect = rect;
 function star(x, y, r1, r2, n = 5) {
     if (!!limeviz_1.lV.ctx) {
-        let angle = limeviz_1.TWO_PI / n;
+        let angle = math_1.TWO_PI / n;
         let halfAngle = angle / 2;
         limeviz_1.lV.ctx.beginPath();
-        for (let a = 0; a < limeviz_1.TWO_PI; a += angle) {
-            let sx = x + (0, limeviz_1.cos)(a - limeviz_1.HALF_PI) * r2;
-            let sy = y + (0, limeviz_1.sin)(a - limeviz_1.HALF_PI) * r2;
+        for (let a = 0; a < math_1.TWO_PI; a += angle) {
+            let sx = x + (0, math_1.cos)(a - math_1.HALF_PI) * r2;
+            let sy = y + (0, math_1.sin)(a - math_1.HALF_PI) * r2;
             limeviz_1.lV.ctx.lineTo(sx, sy);
-            sx = x + (0, limeviz_1.cos)(a - limeviz_1.HALF_PI + halfAngle) * r1;
-            sy = y + (0, limeviz_1.sin)(a - limeviz_1.HALF_PI + halfAngle) * r1;
+            sx = x + (0, math_1.cos)(a - math_1.HALF_PI + halfAngle) * r1;
+            sy = y + (0, math_1.sin)(a - math_1.HALF_PI + halfAngle) * r1;
             limeviz_1.lV.ctx.lineTo(sx, sy);
         }
         limeviz_1.lV.ctx.closePath();
@@ -219,11 +206,11 @@ function star(x, y, r1, r2, n = 5) {
 exports.star = star;
 function polygon(x, y, r, n = 5) {
     if (!!limeviz_1.lV.ctx) {
-        let angle = limeviz_1.TWO_PI / n;
+        let angle = math_1.TWO_PI / n;
         limeviz_1.lV.ctx.beginPath();
-        for (let a = 0; a < limeviz_1.TWO_PI; a += angle) {
-            let sx = x + (0, limeviz_1.cos)(a - limeviz_1.HALF_PI) * r;
-            let sy = y + (0, limeviz_1.sin)(a - limeviz_1.HALF_PI) * r;
+        for (let a = 0; a < math_1.TWO_PI; a += angle) {
+            let sx = x + (0, math_1.cos)(a - math_1.HALF_PI) * r;
+            let sy = y + (0, math_1.sin)(a - math_1.HALF_PI) * r;
             limeviz_1.lV.ctx.lineTo(sx, sy);
         }
         limeviz_1.lV.ctx.closePath();
@@ -350,3 +337,53 @@ function quadraticTo(cpx, cpy, x, y) {
         limeviz_1.lV.ctx.quadraticCurveTo(cpx, cpy, x, y);
 }
 exports.quadraticTo = quadraticTo;
+function placeImage(img, x, y, origin, w, h) {
+    let _x = x;
+    let _y = y;
+    let _w;
+    let _h;
+    if (w) {
+        _w = w;
+    }
+    else {
+        _w = img.naturalWidth;
+    }
+    if (h) {
+        _h = h;
+    }
+    else {
+        _h = img.naturalHeight;
+    }
+    if (!!limeviz_1.lV.ctx) {
+        switch (origin) {
+            case 'left-bottom':
+                limeviz_1.lV.ctx.drawImage(img, _x, _y, _w, -_h);
+                break;
+            case 'right-bottom':
+                limeviz_1.lV.ctx.drawImage(img, _x - _w, _y, _w, -_h);
+                break;
+            case 'center-bottom':
+                limeviz_1.lV.ctx.drawImage(img, _x - _w / 2, _y, _w, -_h);
+                break;
+            case 'left-top':
+                limeviz_1.lV.ctx.drawImage(img, _x, _y, _w, _h);
+                break;
+            case 'right-top':
+                limeviz_1.lV.ctx.drawImage(img, _x - _w, _y, _w, _h);
+                break;
+            case 'center-top':
+                limeviz_1.lV.ctx.drawImage(img, _x - _w / 2, _y, _w, _h);
+                break;
+            case 'left-middle':
+                limeviz_1.lV.ctx.drawImage(img, _x, _y + _h / 2, _w, -_h);
+                break;
+            case 'right-middle':
+                limeviz_1.lV.ctx.drawImage(img, _x - _w, _y + _h / 2, _w, -_h);
+                break;
+            case 'center-middle':
+                limeviz_1.lV.ctx.drawImage(img, _x - _w / 2, _y + _h / 2, _w, -_h);
+                break;
+        }
+    }
+}
+exports.placeImage = placeImage;

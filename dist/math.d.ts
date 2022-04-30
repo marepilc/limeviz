@@ -44,4 +44,7 @@ export declare class Vector {
     set magnitude(magnitude: number);
     limit(limitScalar: number): void;
 }
+export declare const E: number, PI: number, TWO_PI: number, HALF_PI: number, PHI: number;
+export declare let sin: (x: number) => number, cos: (x: number) => number, tan: (x: number) => number, asin: (x: number) => number, acos: (x: number) => number, atan: (x: number) => number, atan2: (y: number, x: number) => number;
+export declare function dist(x1: number, y1: number, x2: number, y2: number): number;
 export {};

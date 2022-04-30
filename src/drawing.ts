@@ -1,8 +1,10 @@
 'use strict'
 
 
-import {cos, HALF_PI, height, lV, PI, restore, rotate, save, sin, translate, TWO_PI, width} from "./limeviz"
+import {height, lV, restore, rotate, save, translate, width} from "./limeviz"
+import {cos, HALF_PI, PI, sin, TWO_PI} from "./math"
 import {color2rgba} from "./colors"
+
 
 export function clear(): void {
     if (!!lV.ctx) lV.ctx.clearRect(0, 0, width, height)
@@ -16,8 +18,6 @@ export function background(v: number[] | string | number, alpha:number=1): void 
     }
     restore()
 }
-
-/* stroke and fill */
 
 export function stroke(v: number[] | string | number, alpha:number=1): void {
     lV.withStroke = true
@@ -34,29 +34,21 @@ export function noStroke(): void {
     lV.withStroke = false
 }
 
-export enum StrokeCupStyle {
-    butt,
-    round,
-    square
-}
+type StrokeCupStyle = 'butt' | 'round' | 'square'
 
 export function strokeCup(style: StrokeCupStyle): void {
-    let types: CanvasLineCap[] = ['butt', 'round', 'square']
-    if (!!lV.ctx) lV.ctx.lineCap = types[style]
+    if (!!lV.ctx) lV.ctx.lineCap = style
 }
 
-export enum JoinStyle {
-    bevel,
-    round,
-    miter
-}
+type JoinStyle = 'bevel' | 'round' | 'miter'
 
 export function strokeJoin(style: JoinStyle, miterValue: number = 10): void {
-    let types: CanvasLineJoin[] = ['bevel', 'round', 'miter']
-    if (style === JoinStyle.miter) {
-        if (!!lV.ctx) lV.ctx.miterLimit = miterValue
+    if (!!lV.ctx) {
+        if (style === 'miter') {
+            if (!!lV.ctx) lV.ctx.miterLimit = miterValue
+        }
+        lV.ctx.lineJoin = style
     }
-    if (!!lV.ctx) lV.ctx.lineJoin = types[style]
 }
 
 export function dashLine(line: number, space: number, offset: number = 0): void {
@@ -79,8 +71,6 @@ export function fill(v: number[] | string | number | CanvasGradient, alpha:numbe
         if (!!lV.ctx) lV.ctx.fillStyle = v
         lV.currentFill = v
     }
-
-
 }
 
 export function noFill(): void {
@@ -190,9 +180,6 @@ export function rect(x: number, y: number, w: number, h: number, r: number = 0):
         lV.commitShape()
     }
 }
-
-
-
 
 export function star(x: number, y: number, r1: number, r2: number, n: number = 5): void {
     if (!!lV.ctx) {
@@ -350,4 +337,57 @@ export function bezierTo(cp1x: number, cp1y: number, cp2x: number, cp2y: number,
 
 export function quadraticTo(cpx: number, cpy: number, x: number, y: number): void {
     if (!!lV.ctx) lV.ctx.quadraticCurveTo(cpx, cpy, x, y)
+}
+
+type ImgOrigin = 'left-bottom' | 'right-bottom' | 'center-bottom' |
+    'left-top' | 'right-top' | 'center-top' |
+    'left-middle' | 'right-middle' | 'center-middle'
+
+export function placeImage(img: HTMLImageElement, x: number, y: number, origin: ImgOrigin,
+                           w?: number, h?: number): void {
+    let _x = x
+    let _y = y
+    let _w: number
+    let _h: number
+    if (w) {
+        _w = w
+    } else {
+        _w = img.naturalWidth
+    }
+    if (h) {
+        _h = h
+    } else {
+        _h = img.naturalHeight
+    }
+    if (!!lV.ctx) {
+        switch (origin) {
+            case 'left-bottom':
+                lV.ctx.drawImage(img, _x, _y, _w, -_h)
+                break
+            case 'right-bottom':
+                lV.ctx.drawImage(img, _x - _w, _y , _w, -_h)
+                break
+            case 'center-bottom':
+                lV.ctx.drawImage(img, _x - _w / 2, _y, _w, -_h)
+                break
+            case 'left-top':
+                lV.ctx.drawImage(img, _x, _y, _w, _h)
+                break
+            case 'right-top':
+                lV.ctx.drawImage(img, _x - _w, _y, _w, _h)
+                break
+            case 'center-top':
+                lV.ctx.drawImage(img, _x - _w / 2, _y, _w, _h)
+                break
+            case 'left-middle':
+                lV.ctx.drawImage(img, _x, _y + _h / 2, _w, -_h)
+                break
+            case 'right-middle':
+                lV.ctx.drawImage(img, _x - _w, _y + _h / 2, _w, -_h)
+                break
+            case 'center-middle':
+                lV.ctx.drawImage(img, _x - _w / 2, _y + _h / 2, _w, -_h)
+                break
+        }
+    }
 }

@@ -1,7 +1,7 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Vector = exports.stdDev = exports.dataRange = exports.iqr = exports.revCentile = exports.centile = exports.avg = exports.sum = exports.min = exports.max = exports.abs = exports.sqrt = exports.pow = exports.sq = exports.constrain = exports.ceil = exports.floor = exports.round2str = exports.round = void 0;
-const limeviz_1 = require("./limeviz");
+exports.dist = exports.atan2 = exports.atan = exports.acos = exports.asin = exports.tan = exports.cos = exports.sin = exports.PHI = exports.HALF_PI = exports.TWO_PI = exports.PI = exports.E = exports.Vector = exports.stdDev = exports.dataRange = exports.iqr = exports.revCentile = exports.centile = exports.avg = exports.sum = exports.min = exports.max = exports.abs = exports.sqrt = exports.pow = exports.sq = exports.constrain = exports.ceil = exports.floor = exports.round2str = exports.round = void 0;
+const helpers_1 = require("./helpers");
 function round(x, decimal) {
     if (decimal) {
         let n = 1;
@@ -16,7 +16,7 @@ function round(x, decimal) {
 }
 exports.round = round;
 function round2str(x, decimal) {
-    let s = (0, limeviz_1.number2str)(round(x, decimal));
+    let s = (0, helpers_1.number2str)(round(x, decimal));
     let ss = s.split('.');
     let missing0;
     if (ss.length === 2) {
@@ -220,3 +220,9 @@ class Vector {
     }
 }
 exports.Vector = Vector;
+exports.E = Math.E, exports.PI = Math.PI, exports.TWO_PI = Math.PI * 2, exports.HALF_PI = Math.PI / 2, exports.PHI = (1 + Math.sqrt(5)) / 2;
+exports.sin = Math.sin, exports.cos = Math.cos, exports.tan = Math.tan, exports.asin = Math.asin, exports.acos = Math.acos, exports.atan = Math.atan, exports.atan2 = Math.atan2;
+function dist(x1, y1, x2, y2) {
+    return (0, exports.sqrt)((0, exports.pow)(x2 - x1, 2) + (0, exports.pow)(y2 - y1, 2));
+}
+exports.dist = dist;

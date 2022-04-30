@@ -1,9 +1,10 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.int = exports.deg2rad = exports.dist = exports.atan2 = exports.atan = exports.acos = exports.asin = exports.tan = exports.cos = exports.sin = exports.PHI = exports.HALF_PI = exports.TWO_PI = exports.PI = exports.E = exports.thousandSep = exports.number2str = exports.textOnArc = exports.lineHeight = exports.fontFamily = exports.fontWeight = exports.fontStyle = exports.textPlacement = exports.TextBaseline = exports.TextAlign = exports.textDim = exports.textWidth = exports.textSize = exports.text = exports.canvas = exports.placeImage = exports.ImgOrigin = exports.staticDrawing = exports.restore = exports.save = exports.scale = exports.rotate = exports.translate = exports.resizeCanvas = exports.selectCanvas = exports.createCanvas = exports.lvStart = exports.cursor = exports.lV = exports.assets = exports.animation = exports.mouse = exports.keyboard = exports.height = exports.width = void 0;
-exports.hexStr = exports.px2mm = exports.mm2px = exports.str = void 0;
+exports.canvas = exports.staticDrawing = exports.restore = exports.save = exports.scale = exports.rotate = exports.translate = exports.resizeCanvas = exports.selectCanvas = exports.createCanvas = exports.lvStart = exports.cursor = exports.lV = exports.assets = exports.animation = exports.mouse = exports.keyboard = exports.height = exports.width = void 0;
 const assets_1 = require("./assets");
 const math_1 = require("./math");
+const typography_1 = require("./typography");
+const helpers_1 = require("./helpers");
 class Keyboard {
     constructor(canvas) {
         this._canvas = canvas;
@@ -135,8 +136,6 @@ class AnimationCtrl {
                 this._reqAF = requestAnimationFrame(this._step);
                 cancelAnimationFrame(this._reqAF);
                 this.isAnimating = false;
-                // this._time = null;
-                // this.currentFrame = 0;
             }
         };
     }
@@ -191,13 +190,13 @@ function setContextDefault() {
         if (!!exports.lV.ctx) {
             exports.lV.ctx.fillStyle = exports.lV.currentFill;
             exports.lV.ctx.strokeStyle = exports.lV.currentStroke;
-            setFont();
+            (0, typography_1.setFont)();
         }
     }
 }
 function lvStart(setup, draw, events, loadAssets) {
     exports.assets = {};
-    if (loadAssets != undefined)
+    if (typeof loadAssets == 'function')
         loadAssets();
     if (assets_1.assetList.length > 0) {
         assets_1.preloader.on('complete', onCompletePreloader); // on complete listener
@@ -217,23 +216,19 @@ exports.lvStart = lvStart;
 function lVrun(setup, draw, events) {
     if (exports.animation == undefined) {
         exports.animation = new AnimationCtrl(() => {
-            // save();
             if (draw != undefined)
                 draw();
-            // restore();
         });
     }
-    if (setup != undefined)
+    if (typeof setup == 'function')
         setup();
     if (exports.mouse == undefined)
         exports.mouse = new Mouse(exports.lV.canvas);
-    if (events != undefined)
+    if (typeof events == 'function')
         events();
     if (exports.lV.noLoop) {
-        // save();
-        if (draw != undefined)
+        if (typeof draw == 'function')
             draw();
-        // restore();
     }
     else {
         exports.animation.start();
@@ -261,8 +256,8 @@ function selectCanvas(id) {
 }
 exports.selectCanvas = selectCanvas;
 function resizeCanvas(w, h, canvas = exports.lV.canvas) {
-    canvas.setAttribute('width', (0, exports.str)(w));
-    canvas.setAttribute('height', (0, exports.str)(h));
+    canvas.setAttribute('width', (0, helpers_1.str)(w));
+    canvas.setAttribute('height', (0, helpers_1.str)(h));
     setContextDefault();
 }
 exports.resizeCanvas = resizeCanvas;
@@ -296,293 +291,9 @@ function staticDrawing() {
     exports.lV.noLoop = true;
 }
 exports.staticDrawing = staticDrawing;
-var ImgOrigin;
-(function (ImgOrigin) {
-    ImgOrigin[ImgOrigin["lb"] = 0] = "lb";
-    ImgOrigin[ImgOrigin["rb"] = 1] = "rb";
-    ImgOrigin[ImgOrigin["cb"] = 2] = "cb";
-    ImgOrigin[ImgOrigin["lt"] = 3] = "lt";
-    ImgOrigin[ImgOrigin["rt"] = 4] = "rt";
-    ImgOrigin[ImgOrigin["ct"] = 5] = "ct";
-    ImgOrigin[ImgOrigin["lc"] = 6] = "lc";
-    ImgOrigin[ImgOrigin["rc"] = 7] = "rc";
-    ImgOrigin[ImgOrigin["cc"] = 8] = "cc";
-})(ImgOrigin = exports.ImgOrigin || (exports.ImgOrigin = {}));
-function placeImage(img, x, y, origin, w, h) {
-    let _x = x;
-    let _y = y;
-    let _w;
-    let _h;
-    if (w) {
-        _w = w;
-    }
-    else {
-        _w = img.naturalWidth;
-    }
-    if (h) {
-        _h = h;
-    }
-    else {
-        _h = img.naturalHeight;
-    }
-    if (!!exports.lV.ctx) {
-        switch (origin) {
-            case ImgOrigin.lb:
-                exports.lV.ctx.drawImage(img, _x, _y, _w, -_h);
-                break;
-            case ImgOrigin.rb:
-                exports.lV.ctx.drawImage(img, _x - _w, _y, _w, -_h);
-                break;
-            case ImgOrigin.cb:
-                exports.lV.ctx.drawImage(img, _x - _w / 2, _y, _w, -_h);
-                break;
-            case ImgOrigin.lt:
-                exports.lV.ctx.drawImage(img, _x, _y, _w, _h);
-                break;
-            case ImgOrigin.rt:
-                exports.lV.ctx.drawImage(img, _x - _w, _y, _w, _h);
-                break;
-            case ImgOrigin.ct:
-                exports.lV.ctx.drawImage(img, _x - _w / 2, _y, _w, _h);
-                break;
-            case ImgOrigin.lc:
-                exports.lV.ctx.drawImage(img, _x, _y + _h / 2, _w, -_h);
-                break;
-            case ImgOrigin.rc:
-                exports.lV.ctx.drawImage(img, _x - _w, _y + _h / 2, _w, -_h);
-                break;
-            case ImgOrigin.cc:
-                exports.lV.ctx.drawImage(img, _x - _w / 2, _y + _h / 2, _w, -_h);
-                break;
-        }
-    }
-}
-exports.placeImage = placeImage;
 function canvas() {
     if (!!exports.lV.canvas) {
         return exports.lV.canvas;
     }
 }
 exports.canvas = canvas;
-//---------------------------------------------------//
-/* TYPOGRAPHY */
-//---------------------------------------------------//
-function text(text, x, y) {
-    let lines = text.split('\n');
-    let lineY = y;
-    if (!!exports.lV.ctx) {
-        for (let i = 0; i < lines.length; i++) {
-            exports.lV.ctx.fillText(lines[i], x, lineY);
-            lineY += exports.lV.fontSize * exports.lV.lineHeight;
-        }
-    }
-}
-exports.text = text;
-function textSize(size) {
-    if (size != undefined) {
-        exports.lV.fontSize = size;
-        if (!!exports.lV.ctx) {
-            setFont();
-        }
-    }
-    else {
-        return exports.lV.fontSize;
-    }
-}
-exports.textSize = textSize;
-function textWidth(text) {
-    if (!!exports.lV.ctx) {
-        return exports.lV.ctx.measureText(text).width;
-    }
-    else {
-        return 0;
-    }
-}
-exports.textWidth = textWidth;
-function textDim(text) {
-    let lines = text.split('\n');
-    let wSize = 0;
-    let hSize = 0;
-    if (!!exports.lV.ctx) {
-        for (let i = 0; i < lines.length; i++) {
-            wSize = (0, math_1.max)([wSize, exports.lV.ctx.measureText(lines[i]).width]);
-            hSize += exports.lV.fontSize * exports.lV.lineHeight;
-        }
-    }
-    hSize = hSize - (exports.lV.fontSize * exports.lV.lineHeight - exports.lV.fontSize);
-    return {
-        w: wSize,
-        h: hSize
-    };
-}
-exports.textDim = textDim;
-var TextAlign;
-(function (TextAlign) {
-    TextAlign[TextAlign["left"] = 0] = "left";
-    TextAlign[TextAlign["right"] = 1] = "right";
-    TextAlign[TextAlign["center"] = 2] = "center";
-    TextAlign[TextAlign["start"] = 3] = "start";
-    TextAlign[TextAlign["end"] = 4] = "end";
-})(TextAlign = exports.TextAlign || (exports.TextAlign = {}));
-var TextBaseline;
-(function (TextBaseline) {
-    TextBaseline[TextBaseline["top"] = 0] = "top";
-    TextBaseline[TextBaseline["hanging"] = 1] = "hanging";
-    TextBaseline[TextBaseline["middle"] = 2] = "middle";
-    TextBaseline[TextBaseline["alphabetic"] = 3] = "alphabetic";
-    TextBaseline[TextBaseline["ideographic"] = 4] = "ideographic";
-    TextBaseline[TextBaseline["bottom"] = 5] = "bottom";
-})(TextBaseline = exports.TextBaseline || (exports.TextBaseline = {}));
-function textPlacement(h, v) {
-    if (!!exports.lV.ctx) {
-        const optionsH = ['left', 'right', 'center', 'start', 'end'];
-        const optionsV = ['top', 'hanging', 'middle', 'alphabetic', 'ideographic', 'bottom'];
-        exports.lV.ctx.textAlign = optionsH[h];
-        if (v != undefined)
-            exports.lV.ctx.textBaseline = optionsV[v];
-    }
-}
-exports.textPlacement = textPlacement;
-function setFont() {
-    if (!!exports.lV.ctx) {
-        exports.lV.ctx.font = `${exports.lV.fontStyle} ${exports.lV.fontWeight} ${exports.lV.fontSize}px ${exports.lV.fontFamily}`;
-    }
-}
-function fontStyle(style) {
-    if (style) {
-        exports.lV.fontStyle = style;
-        if (!!exports.lV.ctx) {
-            setFont();
-        }
-    }
-    else {
-        return exports.lV.fontStyle;
-    }
-}
-exports.fontStyle = fontStyle;
-function fontWeight(weight) {
-    if (weight) {
-        exports.lV.fontWeight = weight;
-        if (!!exports.lV.ctx) {
-            setFont();
-        }
-    }
-    else {
-        return exports.lV.fontWeight;
-    }
-}
-exports.fontWeight = fontWeight;
-function fontFamily(family) {
-    if (family) {
-        exports.lV.fontFamily = family;
-        if (!!exports.lV.ctx) {
-            setFont();
-        }
-    }
-    else {
-        return exports.lV.fontFamily;
-    }
-}
-exports.fontFamily = fontFamily;
-function lineHeight(height) {
-    if (height != undefined) {
-        exports.lV.lineHeight = height;
-    }
-    else {
-        return exports.lV.lineHeight;
-    }
-}
-exports.lineHeight = lineHeight;
-function textOnArc(text, x, y, r, startAngle, align = TextAlign.center, outside = true, inward = true, kerning = 0) {
-    if (!!exports.lV.ctx) {
-        let clockwise = (align === TextAlign.left) ? 1 : -1; // draw clockwise if right. Else counterclockwise
-        if (!outside)
-            r -= exports.lV.fontSize;
-        if (((align === TextAlign.center || align === TextAlign.right) && inward) ||
-            (align === TextAlign.left && !inward))
-            text = text.split('').reverse().join('');
-        save();
-        exports.lV.ctx.translate(x, y);
-        let _startAngle = startAngle;
-        startAngle += exports.HALF_PI;
-        if (!inward)
-            startAngle += exports.PI;
-        exports.lV.ctx.textBaseline = 'middle';
-        exports.lV.ctx.textAlign = 'center';
-        if (align === TextAlign.center) {
-            for (let i = 0; i < text.length; i++) {
-                let charWidth = exports.lV.ctx.measureText(text[i]).width;
-                startAngle += ((charWidth + (i === text.length - 1 ? 0 : kerning)) /
-                    (r - exports.lV.fontSize)) / 2 * -clockwise;
-            }
-        }
-        let tempAngle = 0;
-        exports.lV.ctx.rotate(startAngle);
-        for (let i = 0; i < text.length; i++) {
-            let charWidth = exports.lV.ctx.measureText(text[i]).width;
-            exports.lV.ctx.rotate((charWidth / 2) / (r - exports.lV.fontSize) * clockwise);
-            exports.lV.ctx.fillText(text[i], 0, (inward ? 1 : -1) * (0 - r + exports.lV.fontSize / 2));
-            exports.lV.ctx.rotate((charWidth / 2 + kerning) / (r - exports.lV.fontSize) * clockwise);
-            tempAngle += ((charWidth / 2) / (r - exports.lV.fontSize) * clockwise) +
-                ((charWidth / 2 + kerning) / (r - exports.lV.fontSize) * clockwise);
-        }
-        restore();
-        return _startAngle + tempAngle;
-    }
-    else {
-        return 0;
-    }
-}
-exports.textOnArc = textOnArc;
-function number2str(x, radix = 10) {
-    return x.toString(radix);
-}
-exports.number2str = number2str;
-function thousandSep(x, sep) {
-    let s = number2str(x);
-    let st = s.split('.');
-    let st1 = st[0];
-    let st2 = st.length > 1 ? '.' + st[1] : '';
-    let rgx = /(\d+)(\d{3})/;
-    while (rgx.test(st1)) {
-        st1 = st1.replace(rgx, '$1' + sep + '$2');
-    }
-    return st1 + st2;
-}
-exports.thousandSep = thousandSep;
-//---------------------------------------------------//
-/* MATH */
-//---------------------------------------------------//
-exports.E = Math.E, exports.PI = Math.PI, exports.TWO_PI = Math.PI * 2, exports.HALF_PI = Math.PI / 2, exports.PHI = (1 + Math.sqrt(5)) / 2;
-exports.sin = Math.sin, exports.cos = Math.cos, exports.tan = Math.tan, exports.asin = Math.asin, exports.acos = Math.acos, exports.atan = Math.atan, exports.atan2 = Math.atan2;
-function dist(x1, y1, x2, y2) {
-    return (0, math_1.sqrt)((0, math_1.pow)(x2 - x1, 2) + (0, math_1.pow)(y2 - y1, 2));
-}
-exports.dist = dist;
-/* Conversion */
-function deg2rad(v) {
-    return v * exports.PI / 180;
-}
-exports.deg2rad = deg2rad;
-function int(s, radix = 10) {
-    return parseInt(s, radix);
-}
-exports.int = int;
-exports.str = String;
-function mm2px(v) {
-    return (0, math_1.round)(exports.lV.dpi * v / 25.4);
-}
-exports.mm2px = mm2px;
-function px2mm(v) {
-    return (0, math_1.round)(v * 25.4 / exports.lV.dpi * 10) / 10;
-}
-exports.px2mm = px2mm;
-function hexStr(v) {
-    if ((0, math_1.constrain)(v, 0, 255).toString(16).length == 1) {
-        return 0 + (0, math_1.constrain)(v, 0, 255).toString(16);
-    }
-    else {
-        return (0, math_1.constrain)(v, 0, 255).toString(16);
-    }
-}
-exports.hexStr = hexStr;

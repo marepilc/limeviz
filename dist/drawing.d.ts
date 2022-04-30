@@ -3,17 +3,9 @@ export declare function background(v: number[] | string | number, alpha?: number
 export declare function stroke(v: number[] | string | number, alpha?: number): void;
 export declare function strokeWidth(size: number): void;
 export declare function noStroke(): void;
-export declare enum StrokeCupStyle {
-    butt = 0,
-    round = 1,
-    square = 2
-}
+declare type StrokeCupStyle = 'butt' | 'round' | 'square';
 export declare function strokeCup(style: StrokeCupStyle): void;
-export declare enum JoinStyle {
-    bevel = 0,
-    round = 1,
-    miter = 2
-}
+declare type JoinStyle = 'bevel' | 'round' | 'miter';
 export declare function strokeJoin(style: JoinStyle, miterValue?: number): void;
 export declare function dashLine(line: number, space: number, offset?: number): void;
 export declare function solidLine(): void;
@@ -39,3 +31,6 @@ export declare function moveTo(x: number, y: number): void;
 export declare function lineTo(x: number, y: number): void;
 export declare function bezierTo(cp1x: number, cp1y: number, cp2x: number, cp2y: number, x: number, y: number): void;
 export declare function quadraticTo(cpx: number, cpy: number, x: number, y: number): void;
+declare type ImgOrigin = 'left-bottom' | 'right-bottom' | 'center-bottom' | 'left-top' | 'right-top' | 'center-top' | 'left-middle' | 'right-middle' | 'center-middle';
+export declare function placeImage(img: HTMLImageElement, x: number, y: number, origin: ImgOrigin, w?: number, h?: number): void;
+export {};

@@ -16,42 +16,7 @@ export {
     save,
     restore,
     staticDrawing,
-    ImgOrigin,
-    placeImage,
-    canvas,
-    text,
-    textSize,
-    textWidth,
-    textDim,
-    TextAlign,
-    TextBaseline,
-    textPlacement,
-    fontStyle,
-    fontWeight,
-    fontFamily,
-    lineHeight,
-    textOnArc,
-    number2str,
-    thousandSep,
-    E,
-    PI,
-    TWO_PI,
-    HALF_PI,
-    PHI,
-    sin,
-    cos,
-    tan,
-    asin,
-    acos,
-    atan,
-    atan2,
-    dist,
-    deg2rad,
-    int,
-    str,
-    mm2px,
-    px2mm,
-    hexStr
+    canvas
 } from './limeviz';
 
 export {
@@ -77,13 +42,40 @@ export {
     iqr,
     dataRange,
     stdDev,
+    E,
+    PI,
+    TWO_PI,
+    HALF_PI,
+    PHI,
+    sin,
+    cos,
+    tan,
+    asin,
+    acos,
+    atan,
+    atan2,
+    dist,
     Vector
 } from './math'
 
 export {
+    text,
+    textSize,
+    textWidth,
+    textDim,
+    textAlign,
+    textBaseline,
+    fontStyle,
+    fontWeight,
+    fontFamily,
+    lineHeight,
+    textOnArc,
+} from './typography'
+
+export {
     print,
     svg2img
-} from './helpers'
+} from './utils'
 
 export {
     LinearScale,
@@ -107,9 +99,7 @@ export {
     stroke,
     strokeWidth,
     noStroke,
-    StrokeCupStyle,
     strokeCup,
-    JoinStyle,
     strokeJoin,
     dashLine,
     solidLine,
@@ -134,7 +124,8 @@ export {
     moveTo,
     lineTo,
     bezierTo,
-    quadraticTo
+    quadraticTo,
+    placeImage
 } from './drawing'
 
 export {
@@ -144,3 +135,14 @@ export {
     CanvasGradient,
     linearGradient,
 } from './colors'
+
+export {
+    number2str,
+    thousandSep,
+    deg2rad,
+    int,
+    str,
+    mm2px,
+    px2mm,
+    hexStr
+} from './helpers'

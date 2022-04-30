@@ -1,9 +1,11 @@
 'use strict'
 
 
-import {hexStr, int, lV} from './limeviz'
+import {lV} from './limeviz'
+import {hexStr, int} from './helpers'
 import {constrain, round} from './math'
-import {randomInt} from './numbers';
+import {randomInt} from './numbers'
+
 
 interface ColorRGB {
     r: number,

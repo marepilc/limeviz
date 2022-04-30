@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.linearGradient = exports.randomColor = exports.blend = exports.color2rgba = void 0;
 const limeviz_1 = require("./limeviz");
+const helpers_1 = require("./helpers");
 const math_1 = require("./math");
 const numbers_1 = require("./numbers");
 function color2rgba(v, alpha = 1) {
@@ -50,9 +51,9 @@ function str2rgb(col) {
             col = col.slice(0, 4) + col[3] + col.slice(4);
             col = col + col[5];
         }
-        rgb.r = (0, limeviz_1.int)(col.slice(1, 3), 16);
-        rgb.g = (0, limeviz_1.int)(col.slice(3, 5), 16);
-        rgb.b = (0, limeviz_1.int)(col.slice(5), 16);
+        rgb.r = (0, helpers_1.int)(col.slice(1, 3), 16);
+        rgb.g = (0, helpers_1.int)(col.slice(3, 5), 16);
+        rgb.b = (0, helpers_1.int)(col.slice(5), 16);
     }
     return rgb;
 }
@@ -63,14 +64,14 @@ function blend(color1, color2, proportion) {
     if (rgx.test(c1) && rgx.test(c2)) {
         let col1 = (c1.length === 7) ? c1.slice(1) : c1;
         let col2 = (c2.length === 7) ? c2.slice(1) : c2;
-        let r1 = (0, limeviz_1.int)(col1.slice(0, 2), 16);
-        let r2 = (0, limeviz_1.int)(col2.slice(0, 2), 16);
+        let r1 = (0, helpers_1.int)(col1.slice(0, 2), 16);
+        let r2 = (0, helpers_1.int)(col2.slice(0, 2), 16);
         let r = (0, math_1.round)((1 - proportion) * r1 + proportion * r2);
-        let g1 = (0, limeviz_1.int)(col1.slice(2, 4), 16);
-        let g2 = (0, limeviz_1.int)(col2.slice(2, 4), 16);
+        let g1 = (0, helpers_1.int)(col1.slice(2, 4), 16);
+        let g2 = (0, helpers_1.int)(col2.slice(2, 4), 16);
         let g = (0, math_1.round)((1 - proportion) * g1 + proportion * g2);
-        let b1 = (0, limeviz_1.int)(col1.slice(4), 16);
-        let b2 = (0, limeviz_1.int)(col2.slice(4), 16);
+        let b1 = (0, helpers_1.int)(col1.slice(4), 16);
+        let b2 = (0, helpers_1.int)(col2.slice(4), 16);
         let b = (0, math_1.round)((1 - proportion) * b1 + proportion * b2);
         let strR = r.toString(16);
         if (strR.length === 1)
@@ -89,9 +90,9 @@ function blend(color1, color2, proportion) {
 }
 exports.blend = blend;
 function randomColor() {
-    let r = (0, limeviz_1.hexStr)((0, numbers_1.randomInt)(0, 255));
-    let g = (0, limeviz_1.hexStr)((0, numbers_1.randomInt)(0, 255));
-    let b = (0, limeviz_1.hexStr)((0, numbers_1.randomInt)(0, 255));
+    let r = (0, helpers_1.hexStr)((0, numbers_1.randomInt)(0, 255));
+    let g = (0, helpers_1.hexStr)((0, numbers_1.randomInt)(0, 255));
+    let b = (0, helpers_1.hexStr)((0, numbers_1.randomInt)(0, 255));
     return '#' + r + g + b;
 }
 exports.randomColor = randomColor;

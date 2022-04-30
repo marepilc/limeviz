@@ -3,6 +3,7 @@
 
 import {round} from "./math";
 
+
 export class Noise {
     private _min: number
     private _max: number
