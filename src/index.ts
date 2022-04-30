@@ -16,52 +16,6 @@ export {
     save,
     restore,
     staticDrawing,
-    clear,
-    background,
-    stroke,
-    strokeWidth,
-    noStroke,
-    StrokeCupStyle,
-    strokeCup,
-    JoinStyle,
-    strokeJoin,
-    dashLine,
-    solidLine,
-    fill,
-    noFill,
-    shadow,
-    point,
-    line,
-    arc,
-    circle,
-    ellipse,
-    ring,
-    rect,
-    star,
-    polygon,
-    polyline,
-    spline,
-    bezier,
-    beginPath,
-    endPath,
-    closeShape,
-    moveTo,
-    lineTo,
-    bezierTo,
-    quadraticTo,
-    light,
-    dark,
-    yellow,
-    orange,
-    green,
-    red,
-    blue,
-    magenta,
-    color2rgba,
-    blend,
-    randomColor,
-    CanvasGradient,
-    linearGradient,
     ImgOrigin,
     placeImage,
     canvas,
@@ -97,7 +51,14 @@ export {
     str,
     mm2px,
     px2mm,
-    hexStr,
+    hexStr
+} from './limeviz';
+
+export {
+    addAsset
+} from './assets'
+
+export {
     round,
     round2str,
     floor,
@@ -115,20 +76,71 @@ export {
     revCentile,
     iqr,
     dataRange,
-    SDevMethod,
     stdDev,
-    Vector,
+    Vector
+} from './math'
+
+export {
+    print,
+    svg2img
+} from './helpers'
+
+export {
+    LinearScale,
+    linearScale,
+    ordinalScale
+} from './scales'
+
+export {
     Noise,
     randomInt,
     choose,
     random,
     shuffle,
     unique,
-    fibonacci,
-    LinearScale,
-    linearScale,
-    ordinalScale,
-    print,
-    svg2img,
-    addAsset
-} from "./limeviz";
+    fibonacci
+} from './numbers'
+
+export {
+    clear,
+    background,
+    stroke,
+    strokeWidth,
+    noStroke,
+    StrokeCupStyle,
+    strokeCup,
+    JoinStyle,
+    strokeJoin,
+    dashLine,
+    solidLine,
+    fill,
+    noFill,
+    shadow,
+    point,
+    line,
+    arc,
+    circle,
+    ellipse,
+    ring,
+    rect,
+    star,
+    polygon,
+    polyline,
+    spline,
+    bezier,
+    beginPath,
+    endPath,
+    closeShape,
+    moveTo,
+    lineTo,
+    bezierTo,
+    quadraticTo
+} from './drawing'
+
+export {
+    color2rgba,
+    blend,
+    randomColor,
+    CanvasGradient,
+    linearGradient,
+} from './colors'

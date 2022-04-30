@@ -1,3 +1,4 @@
+import { AssetsObject } from './assets';
 declare class Keyboard {
     keyIsPressed: boolean;
     altIsPressed: boolean;
@@ -43,14 +44,25 @@ declare class AnimationCtrl {
     get fps(): number;
     set fps(v: number);
 }
-interface assetsObject {
-    [key: string]: any;
+declare class LV {
+    ctx: CanvasRenderingContext2D | null;
+    canvas: HTMLCanvasElement;
+    dpi: number;
+    noLoop: boolean;
+    withFill: boolean;
+    withStroke: boolean;
+    currentFill: string | CanvasGradient;
+    currentStroke: string;
+    fontStyle: string;
+    fontWeight: string;
+    fontSize: number;
+    fontFamily: string;
+    lineHeight: number;
+    constructor(canvas: HTMLCanvasElement, noLoop?: boolean);
+    commitShape(): void;
 }
-interface AssetsItem {
-    id: string;
-    src: string;
-}
-export declare let width: number, height: number, keyboard: Keyboard, mouse: Mouse, animation: AnimationCtrl, assets: assetsObject;
+export declare let width: number, height: number, keyboard: Keyboard, mouse: Mouse, animation: AnimationCtrl, assets: AssetsObject;
+export declare let lV: LV;
 declare type CursorType = ('auto' | 'default' | 'none' | 'context-menu' | 'help' | 'pointer' | 'progress' | 'wait' | 'cell' | 'crosshair' | 'text' | 'vertical-text' | 'alias' | 'copy' | 'move' | 'no-drop' | 'not-allowed' | 'grab' | 'grabbing' | 'all-scroll' | 'col-resize' | 'n-resize' | 'e-resize' | 's-resize' | 'w-resize' | 'ne-resize' | 'nw-resize' | 'se-resize' | 'sw-resize' | 'ew-resize' | 'ns-resize' | 'nesw-resize' | 'nwse-resize' | 'zoom-in' | 'zoom-out');
 export declare function cursor(display: CursorType): void;
 export declare function lvStart(setup?: () => void, draw?: () => void, events?: () => void, loadAssets?: () => void): void;
@@ -63,62 +75,6 @@ export declare function scale(x: number, y: number): void;
 export declare function save(): void;
 export declare function restore(): void;
 export declare function staticDrawing(): void;
-export declare function clear(): void;
-export declare function background(v: number[] | string | number, alpha?: number): void;
-export declare function stroke(v: number[] | string | number, alpha?: number): void;
-export declare function strokeWidth(size: number): void;
-export declare function noStroke(): void;
-export declare enum StrokeCupStyle {
-    butt = 0,
-    round = 1,
-    square = 2
-}
-export declare function strokeCup(style: StrokeCupStyle): void;
-export declare enum JoinStyle {
-    bevel = 0,
-    round = 1,
-    miter = 2
-}
-export declare function strokeJoin(style: JoinStyle, miterValue?: number): void;
-export declare function dashLine(line: number, space: number, offset?: number): void;
-export declare function solidLine(): void;
-export declare function fill(v: number[] | string | number | CanvasGradient, alpha?: number): void;
-export declare function noFill(): void;
-export declare function shadow(level: number, offsetX: number, offsetY: number, v: number[] | string | number, alpha?: number): void;
-export declare function point(x: number, y: number): void;
-export declare function line(x1: number, y1: number, x2: number, y2: number): void;
-export declare function arc(x: number, y: number, r: number, startAngle: number, endAngle: number): void;
-export declare function circle(x: number, y: number, r: number): void;
-export declare function ellipse(x: number, y: number, r1: number, r2: number, angle?: number): void;
-export declare function ring(x: number, y: number, r1: number, r2: number, startAngle?: number, endAngle?: number): void;
-export declare function rect(x: number, y: number, w: number, h: number, r?: number): void;
-export declare function star(x: number, y: number, r1: number, r2: number, n?: number): void;
-export declare function polygon(x: number, y: number, r: number, n?: number): void;
-export declare function polyline(pts: number[], closed?: boolean): void;
-export declare function spline(pts: number[], tension?: number, closed?: boolean): void;
-export declare function bezier(x1: number, y1: number, cp1x: number, cp1y: number, cp2x: number, cp2y: number, x2: number, y2: number): void;
-export declare function beginPath(x: number, y: number): void;
-export declare function endPath(): void;
-export declare function closeShape(): void;
-export declare function moveTo(x: number, y: number): void;
-export declare function lineTo(x: number, y: number): void;
-export declare function bezierTo(cp1x: number, cp1y: number, cp2x: number, cp2y: number, x: number, y: number): void;
-export declare function quadraticTo(cpx: number, cpy: number, x: number, y: number): void;
-export declare const light = "#EDE5DD";
-export declare const dark = "#26201C";
-export declare const yellow = "#ECDC21";
-export declare const orange = "#E09423";
-export declare const green = "#53C352";
-export declare const red = "#E0533D";
-export declare const blue = "#4DAFEA";
-export declare const magenta = "#B34DFF";
-export declare function color2rgba(v: number[] | string | number, alpha?: number): string;
-export declare function blend(color1: string, color2: string, proportion: number): string;
-export declare function randomColor(): string;
-export interface CanvasGradient {
-    addColorStop(offset: number, color: string): void;
-}
-export declare function linearGradient(x0: number, y0: number, x1: number, y1: number): CanvasGradient;
 export declare enum ImgOrigin {
     lb = 0,
     rb = 1,
@@ -171,89 +127,4 @@ export declare let str: StringConstructor;
 export declare function mm2px(v: number): number;
 export declare function px2mm(v: number): number;
 export declare function hexStr(v: number): string;
-export declare function round(x: number, decimal?: number): number;
-export declare function round2str(x: number, decimal: number): string;
-export declare let floor: (x: number) => number;
-export declare let ceil: (x: number) => number;
-export declare function constrain(v: number, l1: number, l2: number): number;
-export declare function sq(v: number): number;
-export declare let pow: (x: number, y: number) => number;
-export declare let sqrt: (x: number) => number;
-export declare let abs: (x: number) => number;
-export declare function max(numbers: number[]): number;
-export declare function min(numbers: number[]): number;
-export declare function sum(numbers: number[]): number;
-export declare function avg(numbers: number[]): number;
-export declare function centile(data: number[], c: number): number;
-export declare function revCentile(data: number[], n: number): number;
-export declare function iqr(data: number[]): number;
-export declare function dataRange(data: number[]): number;
-export declare enum SDevMethod {
-    sample = 0,
-    population = 1
-}
-export declare function stdDev(data: number[], method?: SDevMethod): number;
-export declare class Vector {
-    private _x;
-    private _y;
-    constructor(x: number, y: number);
-    set(x: number, y: number): void;
-    get x(): number;
-    get y(): number;
-    set x(v: number);
-    set y(v: number);
-    copy(): Vector;
-    add(v: Vector): Vector;
-    addInPlace(v: Vector): void;
-    sub(v: Vector): Vector;
-    subInPlace(v: Vector): void;
-    mult(s: number): Vector;
-    multInPlace(s: number): void;
-    div(s: number): Vector;
-    divInPlace(s: number): void;
-    dot(v: Vector): number;
-    norm(): Vector;
-    normInPlace(): void;
-    get direction(): number;
-    set direction(angle: number);
-    get magnitude(): number;
-    set magnitude(magnitude: number);
-    limit(limitScalar: number): void;
-}
-export declare class Noise {
-    private _min;
-    private _max;
-    private _range;
-    private _value;
-    constructor(min: number, max: number, noiseRange: number);
-    set min(value: number);
-    set max(value: number);
-    set noiseRange(value: number);
-    get value(): number;
-    set value(value: number);
-    get intValue(): number;
-    private nextValue;
-}
-export declare function randomInt(a: number, b: number): number;
-export declare function choose(items: any[]): any;
-export declare function random(...args: number[]): number;
-export declare function shuffle(items: any[]): void;
-export declare function unique(items: any[]): any[];
-export declare function fibonacci(n: number): number[];
-export declare class LinearScale {
-    private input;
-    private output;
-    conv: (v: number) => number;
-    constructor(inMin: number, inMax: number, outMin: number, outMax: number);
-    private setFunction;
-    set inRange(range: [number, number]);
-    get inRange(): [number, number];
-    set outRange(range: [number, number]);
-    get outRange(): [number, number];
-}
-export declare function linearScale(dataMin: number, dataMax: number, resultMin: number, resultMax: number): (x: number) => number;
-export declare function ordinalScale(d: any[], padding: number, resultMin: number, resultMax: number): (x: number) => number;
-export declare function print(...items: any): void;
-export declare function svg2img(svg: string): HTMLImageElement;
-export declare function addAsset(asset: AssetsItem): void;
 export {};
