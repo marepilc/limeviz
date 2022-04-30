@@ -58,6 +58,7 @@ function str2rgb(col) {
     return rgb;
 }
 function blend(color1, color2, proportion) {
+    proportion = (0, math_1.constrain)(proportion, 0, 1);
     let c1 = (color1.indexOf('#') === 0) ? color1 : '#' + color1;
     let c2 = (color2.indexOf('#') === 0) ? color2 : '#' + color2;
     let rgx = /^#+([a-fA-F\d]{6}|[a-fA-F\d]{3})$/;

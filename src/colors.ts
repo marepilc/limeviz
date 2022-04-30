@@ -66,6 +66,7 @@ function str2rgb(col: string): ColorRGB {
 }
 
 export function blend(color1: string, color2: string, proportion: number): string {
+    proportion = constrain(proportion, 0, 1)
     let c1 = (color1.indexOf('#') === 0) ? color1 : '#' + color1
     let c2 = (color2.indexOf('#') === 0) ? color2 : '#' + color2
     let rgx: RegExp = /^#+([a-fA-F\d]{6}|[a-fA-F\d]{3})$/
