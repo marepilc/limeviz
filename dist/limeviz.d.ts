@@ -4,8 +4,8 @@ declare class Keyboard {
     shiftIsPressed: boolean;
     ctrlIsPressed: boolean;
     keyPressed: string | null;
-    keyDown: (key: string) => void;
-    keyUp: (key: string) => void;
+    keyDown: ((key: string) => void) | null;
+    keyUp: ((key: string) => void) | null;
     private _canvas;
     constructor(canvas: HTMLCanvasElement);
 }
@@ -16,7 +16,7 @@ declare class Mouse {
     private _px;
     private _py;
     isPressed: boolean;
-    wheel: (e: WheelEvent) => void;
+    wheel: ((e: WheelEvent) => void) | null;
     down: () => void;
     up: () => void;
     click: () => void;
@@ -51,7 +51,8 @@ interface AssetsItem {
     src: string;
 }
 export declare let width: number, height: number, keyboard: Keyboard, mouse: Mouse, animation: AnimationCtrl, assets: assetsObject;
-export declare function cursor(display: string): void;
+declare type CursorType = ('auto' | 'default' | 'none' | 'context-menu' | 'help' | 'pointer' | 'progress' | 'wait' | 'cell' | 'crosshair' | 'text' | 'vertical-text' | 'alias' | 'copy' | 'move' | 'no-drop' | 'not-allowed' | 'grab' | 'grabbing' | 'all-scroll' | 'col-resize' | 'n-resize' | 'e-resize' | 's-resize' | 'w-resize' | 'ne-resize' | 'nw-resize' | 'se-resize' | 'sw-resize' | 'ew-resize' | 'ns-resize' | 'nesw-resize' | 'nwse-resize' | 'zoom-in' | 'zoom-out');
+export declare function cursor(display: CursorType): void;
 export declare function lvStart(setup?: () => void, draw?: () => void, events?: () => void, loadAssets?: () => void): void;
 export declare function createCanvas(target: HTMLElement, id?: string): void;
 export declare function selectCanvas(id: string): void;
@@ -252,7 +253,7 @@ export declare class LinearScale {
 }
 export declare function linearScale(dataMin: number, dataMax: number, resultMin: number, resultMax: number): (x: number) => number;
 export declare function ordinalScale(d: any[], padding: number, resultMin: number, resultMax: number): (x: number) => number;
-export declare let print: any;
+export declare function print(...items: any): void;
 export declare function svg2img(svg: string): HTMLImageElement;
 export declare function addAsset(asset: AssetsItem): void;
 export {};
