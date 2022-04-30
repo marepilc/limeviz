@@ -8,15 +8,14 @@ interface ColorRGB {
     b: number
 }
 
-
 class Keyboard {
     public keyIsPressed: boolean
     public altIsPressed: boolean
     public shiftIsPressed: boolean
     public ctrlIsPressed: boolean
     public keyPressed: string | null
-    public keyDown: (key: string) => void
-    public keyUp: (key: string) => void
+    public keyDown: ((key: string) => void) | null
+    public keyUp: ((key: string) => void) | null
     private _canvas: HTMLCanvasElement
 
     constructor(canvas: HTMLCanvasElement) {
@@ -26,8 +25,8 @@ class Keyboard {
         this.shiftIsPressed = false
         this.ctrlIsPressed = false
         this.keyPressed = null
-        this.keyDown = function (key: string) { }
-        this.keyUp = function (key: string) { }
+        this.keyDown = null
+        this.keyUp = null
         this._canvas.tabIndex = 1; // to make it focusable
         this._canvas.addEventListener('keydown', (e: KeyboardEvent) => {
             this.keyIsPressed = true
@@ -35,7 +34,9 @@ class Keyboard {
             if (e.key === 'Shift') this.shiftIsPressed = true
             if (e.key === 'Control') this.ctrlIsPressed = true
             this.keyPressed = e.key
-            this.keyDown(e.key)
+            if (this.keyDown != null) {
+                this.keyDown(e.key)
+            }
         })
         this._canvas.addEventListener('keyup', (e: KeyboardEvent) => {
             this.keyIsPressed = false
@@ -43,7 +44,9 @@ class Keyboard {
             if (e.key === 'Shift') this.shiftIsPressed = false
             if (e.key === 'Control') this.ctrlIsPressed = false
             this.keyPressed = null
-            this.keyUp(e.key)
+            if (this.keyUp != null) {
+                this.keyUp(e.key)
+            }
         })
     }
 }
@@ -55,7 +58,7 @@ class Mouse {
     private _px: number
     private _py: number
     public isPressed: boolean
-    public wheel: (e: WheelEvent) => void
+    public wheel: ((e: WheelEvent) => void) | null
     public down: () => void
     public up: () => void
     public click: () => void
@@ -69,7 +72,7 @@ class Mouse {
         this._px = 0
         this._py = 0
         this.isPressed = false
-        this.wheel = function (e: WheelEvent) {}
+        this.wheel = null
         this.down = function () {}
         this.up = function () {}
         this.click = function () {}
@@ -82,7 +85,9 @@ class Mouse {
         })
         this._canvas.addEventListener('wheel', (e: WheelEvent) => {
             this._updateMousePos(canvas, e)
-            this.wheel(e)
+            if (this.wheel != null) {
+                this.wheel(e)
+            }
         })
         this._canvas.addEventListener('mousedown', () => {
             this.isPressed = true
@@ -251,7 +256,14 @@ export let
 let lV: LV
 let assetList: AssetsItem[] = []
 
-export function cursor(display: string): void {
+type CursorType = ('auto' | 'default' | 'none' | 'context-menu' | 'help' |
+    'pointer' | 'progress' | 'wait' | 'cell' | 'crosshair' | 'text' | 'vertical-text' |
+    'alias' | 'copy' | 'move' | 'no-drop' | 'not-allowed' | 'grab' | 'grabbing' |
+    'all-scroll' | 'col-resize' | 'n-resize' | 'e-resize' | 's-resize' | 'w-resize' |
+    'ne-resize' | 'nw-resize' | 'se-resize' | 'sw-resize' | 'ew-resize' | 'ns-resize' |
+    'nesw-resize' | 'nwse-resize' | 'zoom-in' | 'zoom-out')
+
+export function cursor(display: CursorType): void {
     if (!!lV.canvas) lV.canvas.style.cursor = display
 }
 
@@ -1548,7 +1560,13 @@ export function ordinalScale(d: any[], padding: number, resultMin: number,
 /* Control */
 //---------------------------------------------------//
 
-export let print = Function.prototype.bind.call(console.log, console, 'limeviz >> ')
+export function print(...items: any) {
+    if (items.length != 0) {
+        console.log(...items)
+    } else {
+        window.print()
+    }
+}
 
 export function svg2img(svg: string): HTMLImageElement {
     let img = new Image()
@@ -1619,7 +1637,7 @@ class Preloader {
                     this.loadJson(id, src, onFinishedLoading)
                     break
 
-                // Default case for unsuported file types.
+                // Default case for unsupported file types.
                 default:
                     onFinishedLoading()
                     break

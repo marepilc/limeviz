@@ -11,8 +11,8 @@ class Keyboard {
         this.shiftIsPressed = false;
         this.ctrlIsPressed = false;
         this.keyPressed = null;
-        this.keyDown = function (key) { };
-        this.keyUp = function (key) { };
+        this.keyDown = null;
+        this.keyUp = null;
         this._canvas.tabIndex = 1; // to make it focusable
         this._canvas.addEventListener('keydown', (e) => {
             this.keyIsPressed = true;
@@ -23,7 +23,9 @@ class Keyboard {
             if (e.key === 'Control')
                 this.ctrlIsPressed = true;
             this.keyPressed = e.key;
-            this.keyDown(e.key);
+            if (this.keyDown != null) {
+                this.keyDown(e.key);
+            }
         });
         this._canvas.addEventListener('keyup', (e) => {
             this.keyIsPressed = false;
@@ -34,7 +36,9 @@ class Keyboard {
             if (e.key === 'Control')
                 this.ctrlIsPressed = false;
             this.keyPressed = null;
-            this.keyUp(e.key);
+            if (this.keyUp != null) {
+                this.keyUp(e.key);
+            }
         });
     }
 }
@@ -46,7 +50,7 @@ class Mouse {
         this._px = 0;
         this._py = 0;
         this.isPressed = false;
-        this.wheel = function (e) { };
+        this.wheel = null;
         this.down = function () { };
         this.up = function () { };
         this.click = function () { };
@@ -59,7 +63,9 @@ class Mouse {
         });
         this._canvas.addEventListener('wheel', (e) => {
             this._updateMousePos(canvas, e);
-            this.wheel(e);
+            if (this.wheel != null) {
+                this.wheel(e);
+            }
         });
         this._canvas.addEventListener('mousedown', () => {
             this.isPressed = true;
@@ -1451,7 +1457,15 @@ exports.ordinalScale = ordinalScale;
 //---------------------------------------------------//
 /* Control */
 //---------------------------------------------------//
-exports.print = Function.prototype.bind.call(console.log, console, 'limeviz >> ');
+function print(...items) {
+    if (items.length != 0) {
+        console.log(...items);
+    }
+    else {
+        window.print();
+    }
+}
+exports.print = print;
 function svg2img(svg) {
     let img = new Image();
     let blob = new Blob([svg], { type: 'image/svg+xml' });
@@ -1503,7 +1517,7 @@ class Preloader {
                 case 'json':
                     this.loadJson(id, src, onFinishedLoading);
                     break;
-                // Default case for unsuported file types.
+                // Default case for unsupported file types.
                 default:
                     onFinishedLoading();
                     break;
