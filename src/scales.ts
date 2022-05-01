@@ -2,49 +2,6 @@
 
 import {round} from "./math";
 
-export class LinearScale {
-    private input: [number, number]
-    private output: [number, number]
-    public conv: (v: number) => number
-
-    constructor(inMin: number, inMax: number, outMin: number, outMax: number) {
-        this.input = [inMin, inMax]
-        this.output = [outMin, outMax]
-        this.conv = this.setFunction()
-    }
-
-    private setFunction(): (x: number) => number {
-        return (v: number) => {
-            let domain: number
-            if (this.input[0] != this.input[1]) {
-                domain = (v - this.input[0]) / (this.input[1] - this.input[0])
-            } else {
-                domain = 0.5
-            }
-            let range = this.output[1] - this.output[0]
-            return domain * range + this.output[0]
-        }
-    }
-
-    set inRange(range: [number, number]) {
-        this.input = range
-        this.conv = this.setFunction()
-    }
-
-    get inRange() {
-        return this.input
-    }
-
-    set outRange(range: [number, number]) {
-        this.output = range
-        this.conv = this.setFunction()
-    }
-
-    get outRange(): [number, number] {
-        return this.output
-    }
-
-}
 
 export function linearScale(dataMin: number, dataMax: number, resultMin: number,
                             resultMax: number): (x: number) => number {

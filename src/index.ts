@@ -78,7 +78,6 @@ export {
 } from './utils'
 
 export {
-    LinearScale,
     linearScale,
     ordinalScale
 } from './scales'
@@ -89,6 +88,8 @@ export {
     choose,
     random,
     shuffle,
+    sortAsc,
+    sortDes,
     unique,
     fibonacci
 } from './numbers'

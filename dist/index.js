@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dist = exports.atan2 = exports.atan = exports.acos = exports.asin = exports.tan = exports.cos = exports.sin = exports.PHI = exports.HALF_PI = exports.TWO_PI = exports.PI = exports.E = exports.stdDev = exports.dataRange = exports.iqr = exports.revCentile = exports.centile = exports.avg = exports.sum = exports.min = exports.max = exports.abs = exports.sqrt = exports.pow = exports.sq = exports.constrain = exports.ceil = exports.floor = exports.round2str = exports.round = exports.addAsset = exports.canvas = exports.staticDrawing = exports.restore = exports.save = exports.scale = exports.rotate = exports.translate = exports.resizeCanvas = exports.selectCanvas = exports.createCanvas = exports.lvStart = exports.cursor = exports.assets = exports.animation = exports.mouse = exports.keyboard = exports.height = exports.width = void 0;
-exports.endPath = exports.beginPath = exports.bezier = exports.spline = exports.polyline = exports.polygon = exports.star = exports.rect = exports.ring = exports.ellipse = exports.circle = exports.arc = exports.line = exports.point = exports.shadow = exports.noFill = exports.fill = exports.solidLine = exports.dashLine = exports.strokeJoin = exports.strokeCup = exports.noStroke = exports.strokeWidth = exports.stroke = exports.background = exports.clear = exports.fibonacci = exports.unique = exports.shuffle = exports.random = exports.choose = exports.randomInt = exports.Noise = exports.ordinalScale = exports.linearScale = exports.LinearScale = exports.svg2img = exports.print = exports.textOnArc = exports.lineHeight = exports.fontFamily = exports.fontWeight = exports.fontStyle = exports.textBaseline = exports.textAlign = exports.textDim = exports.textWidth = exports.textSize = exports.text = exports.Vector = void 0;
-exports.hexStr = exports.px2mm = exports.mm2px = exports.str = exports.int = exports.deg2rad = exports.thousandSep = exports.number2str = exports.linearGradient = exports.randomColor = exports.blend = exports.color2rgba = exports.placeImage = exports.quadraticTo = exports.bezierTo = exports.lineTo = exports.moveTo = exports.closeShape = void 0;
+exports.beginPath = exports.bezier = exports.spline = exports.polyline = exports.polygon = exports.star = exports.rect = exports.ring = exports.ellipse = exports.circle = exports.arc = exports.line = exports.point = exports.shadow = exports.noFill = exports.fill = exports.solidLine = exports.dashLine = exports.strokeJoin = exports.strokeCup = exports.noStroke = exports.strokeWidth = exports.stroke = exports.background = exports.clear = exports.fibonacci = exports.unique = exports.sortDes = exports.sortAsc = exports.shuffle = exports.random = exports.choose = exports.randomInt = exports.Noise = exports.ordinalScale = exports.linearScale = exports.svg2img = exports.print = exports.textOnArc = exports.lineHeight = exports.fontFamily = exports.fontWeight = exports.fontStyle = exports.textBaseline = exports.textAlign = exports.textDim = exports.textWidth = exports.textSize = exports.text = exports.Vector = void 0;
+exports.hexStr = exports.px2mm = exports.mm2px = exports.str = exports.int = exports.deg2rad = exports.thousandSep = exports.number2str = exports.linearGradient = exports.randomColor = exports.blend = exports.color2rgba = exports.placeImage = exports.quadraticTo = exports.bezierTo = exports.lineTo = exports.moveTo = exports.closeShape = exports.endPath = void 0;
 var limeviz_1 = require("./limeviz");
 Object.defineProperty(exports, "width", { enumerable: true, get: function () { return limeviz_1.width; } });
 Object.defineProperty(exports, "height", { enumerable: true, get: function () { return limeviz_1.height; } });
@@ -73,7 +73,6 @@ var utils_1 = require("./utils");
 Object.defineProperty(exports, "print", { enumerable: true, get: function () { return utils_1.print; } });
 Object.defineProperty(exports, "svg2img", { enumerable: true, get: function () { return utils_1.svg2img; } });
 var scales_1 = require("./scales");
-Object.defineProperty(exports, "LinearScale", { enumerable: true, get: function () { return scales_1.LinearScale; } });
 Object.defineProperty(exports, "linearScale", { enumerable: true, get: function () { return scales_1.linearScale; } });
 Object.defineProperty(exports, "ordinalScale", { enumerable: true, get: function () { return scales_1.ordinalScale; } });
 var numbers_1 = require("./numbers");
@@ -82,6 +81,8 @@ Object.defineProperty(exports, "randomInt", { enumerable: true, get: function ()
 Object.defineProperty(exports, "choose", { enumerable: true, get: function () { return numbers_1.choose; } });
 Object.defineProperty(exports, "random", { enumerable: true, get: function () { return numbers_1.random; } });
 Object.defineProperty(exports, "shuffle", { enumerable: true, get: function () { return numbers_1.shuffle; } });
+Object.defineProperty(exports, "sortAsc", { enumerable: true, get: function () { return numbers_1.sortAsc; } });
+Object.defineProperty(exports, "sortDes", { enumerable: true, get: function () { return numbers_1.sortDes; } });
 Object.defineProperty(exports, "unique", { enumerable: true, get: function () { return numbers_1.unique; } });
 Object.defineProperty(exports, "fibonacci", { enumerable: true, get: function () { return numbers_1.fibonacci; } });
 var drawing_1 = require("./drawing");

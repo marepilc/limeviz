@@ -1,42 +1,7 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ordinalScale = exports.linearScale = exports.LinearScale = void 0;
+exports.ordinalScale = exports.linearScale = void 0;
 const math_1 = require("./math");
-class LinearScale {
-    constructor(inMin, inMax, outMin, outMax) {
-        this.input = [inMin, inMax];
-        this.output = [outMin, outMax];
-        this.conv = this.setFunction();
-    }
-    setFunction() {
-        return (v) => {
-            let domain;
-            if (this.input[0] != this.input[1]) {
-                domain = (v - this.input[0]) / (this.input[1] - this.input[0]);
-            }
-            else {
-                domain = 0.5;
-            }
-            let range = this.output[1] - this.output[0];
-            return domain * range + this.output[0];
-        };
-    }
-    set inRange(range) {
-        this.input = range;
-        this.conv = this.setFunction();
-    }
-    get inRange() {
-        return this.input;
-    }
-    set outRange(range) {
-        this.output = range;
-        this.conv = this.setFunction();
-    }
-    get outRange() {
-        return this.output;
-    }
-}
-exports.LinearScale = LinearScale;
 function linearScale(dataMin, dataMax, resultMin, resultMax) {
     return (v) => {
         let domain;

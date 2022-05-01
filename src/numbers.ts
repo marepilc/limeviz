@@ -88,6 +88,22 @@ export function shuffle(items: any[]): void {
     }
 }
 
+export function sortAsc(a: number, b: number): number {
+    return a == null || b == null ? NaN
+        : a < b ? -1
+            : a > b ? 1
+                : a >= b ? 0
+                    : NaN
+}
+
+export function sortDes(a: number, b: number): number {
+    return a == null || b == null ? NaN
+        : b < a ? -1
+            : b > a ? 1
+                : b >= a ? 0
+                    : NaN
+}
+
 export function unique(items: any[]): any[] {
     return items.filter((value, index, self) => {
         return self.indexOf(value) === index

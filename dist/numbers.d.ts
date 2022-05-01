@@ -16,5 +16,7 @@ export declare function randomInt(a: number, b: number): number;
 export declare function choose(items: any[]): any;
 export declare function random(...args: number[]): number;
 export declare function shuffle(items: any[]): void;
+export declare function sortAsc(a: number, b: number): number;
+export declare function sortDes(a: number, b: number): number;
 export declare function unique(items: any[]): any[];
 export declare function fibonacci(n: number): number[];
