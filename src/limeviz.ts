@@ -292,16 +292,15 @@ function lVrun(setup?: UserFunc, draw?: UserFunc, events?: UserFunc) {
     if (animation == undefined) {
         animation = new AnimationCtrl(() => {
             if (draw != undefined) draw()
-        });
+            if (lV.noLoop) animation.stop()
+        })
     }
     if (typeof setup == 'function') setup()
-    if (mouse == undefined) mouse = new Mouse(lV.canvas)
-    if (typeof events == 'function') events()
-    if (lV.noLoop) {
-        if (typeof draw == 'function') draw()
-    } else {
-        animation.start()
+    if (typeof events == 'function') {
+        if (mouse == undefined) mouse = new Mouse(lV.canvas)
+        events()
     }
+    animation.start()
 }
 
 export function createCanvas(target: HTMLElement, id?: string): void {

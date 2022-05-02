@@ -218,21 +218,18 @@ function lVrun(setup, draw, events) {
         exports.animation = new AnimationCtrl(() => {
             if (draw != undefined)
                 draw();
+            if (exports.lV.noLoop)
+                exports.animation.stop();
         });
     }
     if (typeof setup == 'function')
         setup();
-    if (exports.mouse == undefined)
-        exports.mouse = new Mouse(exports.lV.canvas);
-    if (typeof events == 'function')
+    if (typeof events == 'function') {
+        if (exports.mouse == undefined)
+            exports.mouse = new Mouse(exports.lV.canvas);
         events();
-    if (exports.lV.noLoop) {
-        if (typeof draw == 'function')
-            draw();
     }
-    else {
-        exports.animation.start();
-    }
+    exports.animation.start();
 }
 function createCanvas(target, id) {
     let cnv = document.createElement('canvas');
