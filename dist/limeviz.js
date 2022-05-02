@@ -214,25 +214,22 @@ function lvStart(setup, draw, events, loadAssets) {
 }
 exports.lvStart = lvStart;
 function lVrun(setup, draw, events) {
+    if (typeof setup == 'function')
+        setup();
+    if (typeof events == 'function') {
+        if (exports.mouse == undefined)
+            exports.mouse = new Mouse(exports.lV.canvas);
+        events();
+    }
     if (exports.animation == undefined) {
         exports.animation = new AnimationCtrl(() => {
             if (draw != undefined)
                 draw();
+            if (exports.lV.noLoop)
+                exports.animation.stop();
         });
     }
-    if (typeof setup == 'function')
-        setup();
-    if (exports.mouse == undefined)
-        exports.mouse = new Mouse(exports.lV.canvas);
-    if (typeof events == 'function')
-        events();
-    if (exports.lV.noLoop) {
-        if (typeof draw == 'function')
-            draw();
-    }
-    else {
-        exports.animation.start();
-    }
+    exports.animation.start();
 }
 function createCanvas(target, id) {
     let cnv = document.createElement('canvas');
