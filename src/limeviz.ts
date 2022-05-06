@@ -63,6 +63,8 @@ class Mouse {
     public click: () => void
     public dblClick: () => void
     public move: (() => void) | null
+    public enter: (() => void) | null
+    public leave: (() => void) | null
 
     constructor(canvas: HTMLCanvasElement) {
         this._canvas = canvas
@@ -77,6 +79,8 @@ class Mouse {
         this.click = function () {}
         this.dblClick = function () {}
         this.move = null
+        this.enter = null
+        this.leave = null
 
         this._canvas.addEventListener('mousemove', (e: MouseEvent) => {
             this._updateMousePos(canvas, e)
@@ -101,6 +105,12 @@ class Mouse {
         })
         this._canvas.addEventListener('dblclick', () => {
             this.dblClick()
+        })
+        this._canvas.addEventListener('mouseenter', () => {
+            if (typeof this.enter === 'function') this.enter()
+        })
+        this._canvas.addEventListener('mouseleave', () => {
+            if (typeof this.leave === 'function') this.leave()
         })
     }
 
