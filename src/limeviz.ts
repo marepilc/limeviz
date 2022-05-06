@@ -4,7 +4,6 @@
 import {preloader, AssetsObject, assetList} from './assets'
 import {round, floor, abs} from './math'
 import {setFont} from './typography'
-import {str} from './helpers'
 
 
 class Keyboard {
@@ -118,8 +117,8 @@ class Mouse {
         this._px = this._x
         this._py = this._y
         let bbox = canvas.getBoundingClientRect()
-        this._x = abs(round((e.clientX - bbox.left) * (width / bbox.width)))
-        this._y = abs(round((e.clientY - bbox.top) * (height / bbox.height)))
+        this._x = abs(round(e.clientX - bbox.left))
+        this._y = abs(round(e.clientY - bbox.top))
     }
 
     get x() {
@@ -267,9 +266,13 @@ export function cursor(display: CursorType): void {
 function setContextDefault(): void {
     if (!!lV.canvas) {
         lV.ctx = lV.canvas.getContext('2d')
-        height = lV.canvas.height
-        width = lV.canvas.width
+        let pxRatio = window.devicePixelRatio || 1
+        lV.canvas.width = floor(parseInt(lV.canvas.style.width) * pxRatio)
+        lV.canvas.height = floor(parseInt(lV.canvas.style.height) * pxRatio)
+        width = parseInt(lV.canvas.style.width)
+        height = parseInt(lV.canvas.style.height)
         if (!!lV.ctx) {
+            lV.ctx.scale(pxRatio, pxRatio)
             lV.ctx.fillStyle = lV.currentFill
             lV.ctx.strokeStyle = lV.currentStroke
             setFont()
@@ -330,8 +333,8 @@ export function selectCanvas(id: string): void {
 }
 
 export function resizeCanvas(w: number, h: number, canvas: HTMLCanvasElement = lV.canvas): void {
-    canvas.setAttribute('width', str(w))
-    canvas.setAttribute('height', str(h))
+    canvas.style.width = `${w}px`
+    canvas.style.height = `${h}px`
     setContextDefault()
 }
 

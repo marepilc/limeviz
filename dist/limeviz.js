@@ -4,7 +4,6 @@ exports.canvas = exports.staticDrawing = exports.restore = exports.save = export
 const assets_1 = require("./assets");
 const math_1 = require("./math");
 const typography_1 = require("./typography");
-const helpers_1 = require("./helpers");
 class Keyboard {
     constructor(canvas) {
         this._canvas = canvas;
@@ -98,8 +97,8 @@ class Mouse {
         this._px = this._x;
         this._py = this._y;
         let bbox = canvas.getBoundingClientRect();
-        this._x = (0, math_1.abs)((0, math_1.round)((e.clientX - bbox.left) * (exports.width / bbox.width)));
-        this._y = (0, math_1.abs)((0, math_1.round)((e.clientY - bbox.top) * (exports.height / bbox.height)));
+        this._x = (0, math_1.abs)((0, math_1.round)(e.clientX - bbox.left));
+        this._y = (0, math_1.abs)((0, math_1.round)(e.clientY - bbox.top));
     }
     get x() {
         return this._x;
@@ -195,9 +194,13 @@ exports.cursor = cursor;
 function setContextDefault() {
     if (!!exports.lV.canvas) {
         exports.lV.ctx = exports.lV.canvas.getContext('2d');
-        exports.height = exports.lV.canvas.height;
-        exports.width = exports.lV.canvas.width;
+        let pxRatio = window.devicePixelRatio || 1;
+        exports.lV.canvas.width = (0, math_1.floor)(parseInt(exports.lV.canvas.style.width) * pxRatio);
+        exports.lV.canvas.height = (0, math_1.floor)(parseInt(exports.lV.canvas.style.height) * pxRatio);
+        exports.width = parseInt(exports.lV.canvas.style.width);
+        exports.height = parseInt(exports.lV.canvas.style.height);
         if (!!exports.lV.ctx) {
+            exports.lV.ctx.scale(pxRatio, pxRatio);
             exports.lV.ctx.fillStyle = exports.lV.currentFill;
             exports.lV.ctx.strokeStyle = exports.lV.currentStroke;
             (0, typography_1.setFont)();
@@ -263,8 +266,8 @@ function selectCanvas(id) {
 }
 exports.selectCanvas = selectCanvas;
 function resizeCanvas(w, h, canvas = exports.lV.canvas) {
-    canvas.setAttribute('width', (0, helpers_1.str)(w));
-    canvas.setAttribute('height', (0, helpers_1.str)(h));
+    canvas.style.width = `${w}px`;
+    canvas.style.height = `${h}px`;
     setContextDefault();
 }
 exports.resizeCanvas = resizeCanvas;
