@@ -46,6 +46,7 @@ declare class AnimationCtrl {
     get fps(): number;
     set fps(v: number);
 }
+export declare type LengthUnit = 'px' | 'pt' | 'pc' | 'in' | 'Q' | 'mm' | 'cm';
 declare class LV {
     ctx: CanvasRenderingContext2D | null;
     canvas: HTMLCanvasElement;
@@ -58,6 +59,7 @@ declare class LV {
     fontStyle: string;
     fontWeight: string;
     fontSize: number;
+    fontUnit: LengthUnit;
     fontFamily: string;
     lineHeight: number;
     constructor(canvas: HTMLCanvasElement, noLoop?: boolean);

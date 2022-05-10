@@ -204,6 +204,8 @@ class AnimationCtrl {
     }
 }
 
+export type LengthUnit = 'px' | 'pt' | 'pc' | 'in' | 'Q' | 'mm' | 'cm'
+
 class LV {
     public ctx: CanvasRenderingContext2D | null
     public canvas: HTMLCanvasElement
@@ -216,6 +218,7 @@ class LV {
     public fontStyle: string
     public fontWeight: string
     public fontSize: number
+    public fontUnit: LengthUnit
     public fontFamily: string
     public lineHeight: number
 
@@ -231,6 +234,7 @@ class LV {
         this.fontStyle = 'normal'
         this.fontWeight = 'normal'
         this.fontSize = 24
+        this.fontUnit = 'px'
         this.fontFamily = 'sans-serif'
         this.lineHeight = 1.1
     }

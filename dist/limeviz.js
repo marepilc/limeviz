@@ -176,6 +176,7 @@ class LV {
         this.fontStyle = 'normal';
         this.fontWeight = 'normal';
         this.fontSize = 24;
+        this.fontUnit = 'px';
         this.fontFamily = 'sans-serif';
         this.lineHeight = 1.1;
     }

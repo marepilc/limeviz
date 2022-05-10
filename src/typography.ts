@@ -2,7 +2,7 @@
 
 
 import {HALF_PI, PI, max} from './math';
-import {lV, restore, save} from './limeviz'
+import {lV, restore, save, LengthUnit} from './limeviz'
 
 
 export function text(text: string, x: number, y: number): void {
@@ -24,6 +24,12 @@ export function textSize(size?: number): void | number {
         }
     } else {
         return lV.fontSize
+    }
+}
+
+export function fontUnit(unit: LengthUnit): void {
+    if (!!lV) {
+        lV.fontUnit = unit
     }
 }
 
@@ -68,7 +74,7 @@ export function textBaseline(baseline: TextBaseline): void {
 
 export function setFont(): void {
     if (!!lV.ctx) {
-        lV.ctx.font = `${lV.fontStyle} ${lV.fontWeight} ${lV.fontSize}px ${lV.fontFamily}`
+        lV.ctx.font = `${lV.fontStyle} ${lV.fontWeight} ${lV.fontSize}${lV.fontUnit} ${lV.fontFamily}`
     }
 }
 

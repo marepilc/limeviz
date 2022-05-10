@@ -61,6 +61,7 @@ export {
 export {
     text,
     textSize,
+    fontUnit,
     textWidth,
     textDim,
     textAlign,

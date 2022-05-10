@@ -1,5 +1,7 @@
+import { LengthUnit } from './limeviz';
 export declare function text(text: string, x: number, y: number): void;
 export declare function textSize(size?: number): void | number;
+export declare function fontUnit(unit: LengthUnit): void;
 export declare function textWidth(text: string): number;
 export declare function textDim(text: string): {
     w: number;
