@@ -171,8 +171,8 @@ class LV {
         this.noLoop = noLoop;
         this.withFill = true;
         this.withStroke = true;
-        this.currentFill = '#c53c3c';
-        this.currentStroke = '#4dd227';
+        this.currentFill = '#65a30d';
+        this.currentStroke = '#44403c';
         this.fontStyle = 'normal';
         this.fontWeight = 'normal';
         this.fontSize = 24;
@@ -204,10 +204,10 @@ function setContextDefault() {
         exports.lV.ctx = exports.lV.canvas.getContext('2d');
         let pxRatio = window.devicePixelRatio || 1;
         pxRatio *= exports.lV.scaleCoefficient;
-        exports.lV.canvas.width = parseFloat(exports.lV.canvas.style.width) * pxRatio || 300;
-        exports.lV.canvas.height = parseFloat(exports.lV.canvas.style.height) * pxRatio || 150;
-        exports.width = parseFloat(exports.lV.canvas.style.width) || 300;
-        exports.height = parseFloat(exports.lV.canvas.style.height) || 150;
+        exports.lV.canvas.width = exports.lV.canvas.clientWidth * pxRatio || 300;
+        exports.lV.canvas.height = exports.lV.canvas.clientHeight * pxRatio || 150;
+        exports.width = exports.lV.canvas.clientWidth || 300;
+        exports.height = exports.lV.canvas.clientHeight || 150;
         if (!!exports.lV.ctx) {
             exports.lV.ctx.scale(pxRatio, pxRatio);
             exports.lV.ctx.fillStyle = exports.lV.currentFill;
@@ -267,9 +267,9 @@ function createCanvas(target, id) {
 exports.createCanvas = createCanvas;
 function selectCanvas(id) {
     let cnv = document.getElementById(id);
-    if (exports.keyboard == undefined)
+    if (exports.keyboard == undefined && !!cnv)
         exports.keyboard = new Keyboard(cnv);
-    if (exports.lV == undefined)
+    if (exports.lV == undefined && !!cnv)
         exports.lV = new LV(cnv);
     setContextDefault();
 }

@@ -230,8 +230,8 @@ class LV {
         this.noLoop = noLoop
         this.withFill = true
         this.withStroke = true
-        this.currentFill = '#c53c3c'
-        this.currentStroke = '#4dd227'
+        this.currentFill = '#65a30d'
+        this.currentStroke = '#44403c'
         this.fontStyle = 'normal'
         this.fontWeight = 'normal'
         this.fontSize = 24
@@ -280,10 +280,10 @@ function setContextDefault(): void {
         lV.ctx = lV.canvas.getContext('2d')
         let pxRatio = window.devicePixelRatio || 1
         pxRatio *= lV.scaleCoefficient
-        lV.canvas.width = parseFloat(lV.canvas.style.width) * pxRatio || 300
-        lV.canvas.height = parseFloat(lV.canvas.style.height) * pxRatio || 150
-        width = parseFloat(lV.canvas.style.width) || 300
-        height = parseFloat(lV.canvas.style.height) || 150
+        lV.canvas.width = lV.canvas.clientWidth * pxRatio || 300
+        lV.canvas.height = lV.canvas.clientHeight * pxRatio || 150
+        width = lV.canvas.clientWidth || 300
+        height = lV.canvas.clientHeight || 150
         if (!!lV.ctx) {
             lV.ctx.scale(pxRatio, pxRatio)
             lV.ctx.fillStyle = lV.currentFill
@@ -340,8 +340,8 @@ export function createCanvas(target: HTMLElement, id?: string): void {
 
 export function selectCanvas(id: string): void {
     let cnv = <HTMLCanvasElement>document.getElementById(id)
-    if (keyboard == undefined) keyboard = new Keyboard(cnv)
-    if (lV == undefined) lV = new LV(cnv)
+    if (keyboard == undefined && !!cnv) keyboard = new Keyboard(cnv)
+    if (lV == undefined && !!cnv) lV = new LV(cnv)
     setContextDefault()
 }
 
