@@ -1,6 +1,6 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.canvas = exports.staticDrawing = exports.restore = exports.save = exports.scale = exports.rotate = exports.translate = exports.resizeCanvas = exports.selectCanvas = exports.createCanvas = exports.lvStart = exports.cursor = exports.lV = exports.assets = exports.animation = exports.mouse = exports.keyboard = exports.height = exports.width = void 0;
+exports.canvas = exports.staticDrawing = exports.restore = exports.save = exports.scale = exports.rotate = exports.translate = exports.resizeCanvas = exports.selectCanvas = exports.createCanvas = exports.lvStart = exports.scaleModifier = exports.cursor = exports.lV = exports.assets = exports.animation = exports.mouse = exports.keyboard = exports.height = exports.width = void 0;
 const assets_1 = require("./assets");
 const math_1 = require("./math");
 const typography_1 = require("./typography");
@@ -179,6 +179,7 @@ class LV {
         this.fontUnit = 'px';
         this.fontFamily = 'sans-serif';
         this.lineHeight = 1.1;
+        this.scaleCoefficient = 1;
     }
     commitShape() {
         if (this.withFill && !!this.ctx)
@@ -192,14 +193,21 @@ function cursor(display) {
         exports.lV.canvas.style.cursor = display;
 }
 exports.cursor = cursor;
+function scaleModifier(v) {
+    if (!!exports.lV) {
+        exports.lV.scaleCoefficient = v;
+    }
+}
+exports.scaleModifier = scaleModifier;
 function setContextDefault() {
     if (!!exports.lV.canvas) {
         exports.lV.ctx = exports.lV.canvas.getContext('2d');
         let pxRatio = window.devicePixelRatio || 1;
-        exports.lV.canvas.width = (0, math_1.floor)(parseInt(exports.lV.canvas.style.width) * pxRatio);
-        exports.lV.canvas.height = (0, math_1.floor)(parseInt(exports.lV.canvas.style.height) * pxRatio);
-        exports.width = parseInt(exports.lV.canvas.style.width);
-        exports.height = parseInt(exports.lV.canvas.style.height);
+        pxRatio *= exports.lV.scaleCoefficient;
+        exports.lV.canvas.width = parseFloat(exports.lV.canvas.style.width) * pxRatio || 300;
+        exports.lV.canvas.height = parseFloat(exports.lV.canvas.style.height) * pxRatio || 150;
+        exports.width = parseFloat(exports.lV.canvas.style.width) || 300;
+        exports.height = parseFloat(exports.lV.canvas.style.height) || 150;
         if (!!exports.lV.ctx) {
             exports.lV.ctx.scale(pxRatio, pxRatio);
             exports.lV.ctx.fillStyle = exports.lV.currentFill;

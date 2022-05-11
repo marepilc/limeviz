@@ -1,4 +1,4 @@
-export { width, height, keyboard, mouse, animation, assets, cursor, lvStart, createCanvas, selectCanvas, resizeCanvas, translate, rotate, scale, save, restore, staticDrawing, canvas } from './limeviz';
+export { width, height, keyboard, mouse, animation, assets, cursor, scaleModifier, lvStart, createCanvas, selectCanvas, resizeCanvas, translate, rotate, scale, save, restore, staticDrawing, canvas } from './limeviz';
 export { addAsset } from './assets';
 export { round, round2str, floor, ceil, constrain, sq, pow, sqrt, abs, max, min, sum, avg, centile, revCentile, iqr, dataRange, stdDev, E, PI, TWO_PI, HALF_PI, PHI, sin, cos, tan, asin, acos, atan, atan2, dist, Vector } from './math';
 export { text, textSize, fontUnit, textWidth, textDim, textAlign, textBaseline, fontStyle, fontWeight, fontFamily, lineHeight, textOnArc, } from './typography';

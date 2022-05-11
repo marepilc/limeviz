@@ -221,6 +221,7 @@ class LV {
     public fontUnit: LengthUnit
     public fontFamily: string
     public lineHeight: number
+    public scaleCoefficient: number
 
     constructor(canvas: HTMLCanvasElement, noLoop = false) {
         this.canvas = canvas
@@ -237,6 +238,7 @@ class LV {
         this.fontUnit = 'px'
         this.fontFamily = 'sans-serif'
         this.lineHeight = 1.1
+        this.scaleCoefficient = 1
     }
 
     public commitShape() {
@@ -267,14 +269,21 @@ export function cursor(display: CursorType): void {
     if (!!lV.canvas) lV.canvas.style.cursor = display
 }
 
+export function scaleModifier(v: number) {
+    if (!!lV) {
+        lV.scaleCoefficient = v
+    }
+}
+
 function setContextDefault(): void {
     if (!!lV.canvas) {
         lV.ctx = lV.canvas.getContext('2d')
         let pxRatio = window.devicePixelRatio || 1
-        lV.canvas.width = floor(parseInt(lV.canvas.style.width) * pxRatio)
-        lV.canvas.height = floor(parseInt(lV.canvas.style.height) * pxRatio)
-        width = parseInt(lV.canvas.style.width)
-        height = parseInt(lV.canvas.style.height)
+        pxRatio *= lV.scaleCoefficient
+        lV.canvas.width = parseFloat(lV.canvas.style.width) * pxRatio || 300
+        lV.canvas.height = parseFloat(lV.canvas.style.height) * pxRatio || 150
+        width = parseFloat(lV.canvas.style.width) || 300
+        height = parseFloat(lV.canvas.style.height) || 150
         if (!!lV.ctx) {
             lV.ctx.scale(pxRatio, pxRatio)
             lV.ctx.fillStyle = lV.currentFill

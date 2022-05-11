@@ -62,6 +62,7 @@ declare class LV {
     fontUnit: LengthUnit;
     fontFamily: string;
     lineHeight: number;
+    scaleCoefficient: number;
     constructor(canvas: HTMLCanvasElement, noLoop?: boolean);
     commitShape(): void;
 }
@@ -69,6 +70,7 @@ export declare let width: number, height: number, keyboard: Keyboard, mouse: Mou
 export declare let lV: LV;
 declare type CursorType = ('auto' | 'default' | 'none' | 'context-menu' | 'help' | 'pointer' | 'progress' | 'wait' | 'cell' | 'crosshair' | 'text' | 'vertical-text' | 'alias' | 'copy' | 'move' | 'no-drop' | 'not-allowed' | 'grab' | 'grabbing' | 'all-scroll' | 'col-resize' | 'n-resize' | 'e-resize' | 's-resize' | 'w-resize' | 'ne-resize' | 'nw-resize' | 'se-resize' | 'sw-resize' | 'ew-resize' | 'ns-resize' | 'nesw-resize' | 'nwse-resize' | 'zoom-in' | 'zoom-out');
 export declare function cursor(display: CursorType): void;
+export declare function scaleModifier(v: number): void;
 declare type UserFunc = (() => void) | null;
 export declare function lvStart(setup?: UserFunc, draw?: UserFunc, events?: UserFunc, loadAssets?: UserFunc): void;
 export declare function createCanvas(target: HTMLElement, id?: string): void;
