@@ -6,6 +6,7 @@ export {
     animation,
     assets,
     cursor,
+    CursorType,
     scaleModifier,
     lvStart,
     createCanvas,

@@ -51,11 +51,12 @@ class Mouse {
         this._px = 0;
         this._py = 0;
         this.isPressed = false;
+        this.button = null;
         this.wheel = null;
-        this.down = function () { };
-        this.up = function () { };
-        this.click = function () { };
-        this.dblClick = function () { };
+        this.down = null;
+        this.up = null;
+        this.click = null;
+        this.dblClick = null;
         this.move = null;
         this.enter = null;
         this.leave = null;
@@ -70,20 +71,30 @@ class Mouse {
                 this.wheel(e);
             }
         });
-        this._canvas.addEventListener('mousedown', () => {
+        this._canvas.addEventListener('mousedown', (e) => {
             this.isPressed = true;
-            this.down();
-        });
-        this._canvas.addEventListener('mouseup', () => {
+            this.button = e.button;
+            if (this.down != null) {
+                this.down(e);
+            }
+        }, false);
+        this._canvas.addEventListener('mouseup', (e) => {
             this.isPressed = false;
-            this.up();
-        });
-        this._canvas.addEventListener('click', () => {
-            this.click();
-        });
-        this._canvas.addEventListener('dblclick', () => {
-            this.dblClick();
-        });
+            this.button = null;
+            if (this.up != null) {
+                this.up(e);
+            }
+        }, false);
+        this._canvas.addEventListener('click', (e) => {
+            if (this.click != null) {
+                this.click(e);
+            }
+        }, false);
+        this._canvas.addEventListener('dblclick', (e) => {
+            if (this.dblClick != null) {
+                this.dblClick(e);
+            }
+        }, false);
         this._canvas.addEventListener('mouseenter', () => {
             if (typeof this.enter === 'function')
                 this.enter();
@@ -246,9 +257,9 @@ function lVrun(setup, draw, events) {
     }
     if (typeof setup == 'function')
         setup();
+    if (exports.mouse == undefined)
+        exports.mouse = new Mouse(exports.lV.canvas);
     if (typeof events == 'function') {
-        if (exports.mouse == undefined)
-            exports.mouse = new Mouse(exports.lV.canvas);
         events();
     }
     exports.animation.start();

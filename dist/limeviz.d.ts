@@ -17,11 +17,12 @@ declare class Mouse {
     private _px;
     private _py;
     isPressed: boolean;
+    button: number | null;
     wheel: ((e: WheelEvent) => void) | null;
-    down: () => void;
-    up: () => void;
-    click: () => void;
-    dblClick: () => void;
+    down: ((e: MouseEvent) => void) | null;
+    up: ((e: MouseEvent) => void) | null;
+    click: ((e: MouseEvent) => void) | null;
+    dblClick: ((e: MouseEvent) => void) | null;
     move: (() => void) | null;
     enter: (() => void) | null;
     leave: (() => void) | null;
@@ -68,7 +69,7 @@ declare class LV {
 }
 export declare let width: number, height: number, keyboard: Keyboard, mouse: Mouse, animation: AnimationCtrl, assets: AssetsObject;
 export declare let lV: LV;
-declare type CursorType = ('auto' | 'default' | 'none' | 'context-menu' | 'help' | 'pointer' | 'progress' | 'wait' | 'cell' | 'crosshair' | 'text' | 'vertical-text' | 'alias' | 'copy' | 'move' | 'no-drop' | 'not-allowed' | 'grab' | 'grabbing' | 'all-scroll' | 'col-resize' | 'n-resize' | 'e-resize' | 's-resize' | 'w-resize' | 'ne-resize' | 'nw-resize' | 'se-resize' | 'sw-resize' | 'ew-resize' | 'ns-resize' | 'nesw-resize' | 'nwse-resize' | 'zoom-in' | 'zoom-out');
+export declare type CursorType = ('auto' | 'default' | 'none' | 'context-menu' | 'help' | 'pointer' | 'progress' | 'wait' | 'cell' | 'crosshair' | 'text' | 'vertical-text' | 'alias' | 'copy' | 'move' | 'no-drop' | 'not-allowed' | 'grab' | 'grabbing' | 'all-scroll' | 'col-resize' | 'n-resize' | 'e-resize' | 's-resize' | 'w-resize' | 'ne-resize' | 'nw-resize' | 'se-resize' | 'sw-resize' | 'ew-resize' | 'ns-resize' | 'nesw-resize' | 'nwse-resize' | 'zoom-in' | 'zoom-out');
 export declare function cursor(display: CursorType): void;
 export declare function scaleModifier(v: number): void;
 declare type UserFunc = (() => void) | null;

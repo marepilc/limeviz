@@ -56,11 +56,12 @@ class Mouse {
     private _px: number
     private _py: number
     public isPressed: boolean
+    public button: number | null
     public wheel: ((e: WheelEvent) => void) | null
-    public down: () => void
-    public up: () => void
-    public click: () => void
-    public dblClick: () => void
+    public down: ((e: MouseEvent) => void) | null
+    public up: ((e: MouseEvent) => void) | null
+    public click: ((e: MouseEvent) => void) | null
+    public dblClick: ((e: MouseEvent) => void) | null
     public move: (() => void) | null
     public enter: (() => void) | null
     public leave: (() => void) | null
@@ -72,11 +73,12 @@ class Mouse {
         this._px = 0
         this._py = 0
         this.isPressed = false
+        this.button = null
         this.wheel = null
-        this.down = function () {}
-        this.up = function () {}
-        this.click = function () {}
-        this.dblClick = function () {}
+        this.down = null
+        this.up = null
+        this.click = null
+        this.dblClick = null
         this.move = null
         this.enter = null
         this.leave = null
@@ -91,20 +93,30 @@ class Mouse {
                 this.wheel(e)
             }
         })
-        this._canvas.addEventListener('mousedown', () => {
+        this._canvas.addEventListener('mousedown', (e: MouseEvent) => {
             this.isPressed = true
-            this.down()
-        })
-        this._canvas.addEventListener('mouseup', () => {
+            this.button = e.button
+            if (this.down != null) {
+                this.down(e)
+            }
+        }, false)
+        this._canvas.addEventListener('mouseup', (e: MouseEvent) => {
             this.isPressed = false
-            this.up()
-        })
-        this._canvas.addEventListener('click', () => {
-            this.click()
-        })
-        this._canvas.addEventListener('dblclick', () => {
-            this.dblClick()
-        })
+            this.button = null
+            if (this.up != null) {
+                this.up(e)
+            }
+        }, false)
+        this._canvas.addEventListener('click', (e: MouseEvent) => {
+            if (this.click != null) {
+                this.click(e)
+            }
+        }, false)
+        this._canvas.addEventListener('dblclick', (e: MouseEvent) => {
+            if (this.dblClick != null) {
+                this.dblClick(e)
+            }
+        }, false)
         this._canvas.addEventListener('mouseenter', () => {
             if (typeof this.enter === 'function') this.enter()
         })
@@ -258,7 +270,7 @@ export let
 
 export let lV: LV
 
-type CursorType = ('auto' | 'default' | 'none' | 'context-menu' | 'help' |
+export type CursorType = ('auto' | 'default' | 'none' | 'context-menu' | 'help' |
     'pointer' | 'progress' | 'wait' | 'cell' | 'crosshair' | 'text' | 'vertical-text' |
     'alias' | 'copy' | 'move' | 'no-drop' | 'not-allowed' | 'grab' | 'grabbing' |
     'all-scroll' | 'col-resize' | 'n-resize' | 'e-resize' | 's-resize' | 'w-resize' |
@@ -322,8 +334,8 @@ function lVrun(setup?: UserFunc, draw?: UserFunc, events?: UserFunc) {
         })
     }
     if (typeof setup == 'function') setup()
+    if (mouse == undefined) mouse = new Mouse(lV.canvas)
     if (typeof events == 'function') {
-        if (mouse == undefined) mouse = new Mouse(lV.canvas)
         events()
     }
     animation.start()
