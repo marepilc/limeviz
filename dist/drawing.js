@@ -1,6 +1,6 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.placeImage = exports.quadraticTo = exports.bezierTo = exports.lineTo = exports.moveTo = exports.closeShape = exports.endPath = exports.beginPath = exports.bezier = exports.spline = exports.polyline = exports.polygon = exports.star = exports.rect = exports.ring = exports.ellipse = exports.circle = exports.arc = exports.line = exports.point = exports.shadow = exports.noFill = exports.fill = exports.solidLine = exports.dashLine = exports.strokeJoin = exports.strokeCup = exports.noStroke = exports.strokeWidth = exports.stroke = exports.background = exports.clear = void 0;
+exports.placeImage = exports.quadraticTo = exports.bezierTo = exports.lineTo = exports.moveTo = exports.closePath = exports.endPath = exports.beginPath = exports.bezier = exports.spline = exports.polyline = exports.polygon = exports.star = exports.rect = exports.ring = exports.ellipse = exports.circle = exports.arc = exports.line = exports.point = exports.shadow = exports.noFill = exports.fill = exports.solidLine = exports.dashLine = exports.strokeJoin = exports.strokeCup = exports.noStroke = exports.strokeWidth = exports.stroke = exports.background = exports.clear = void 0;
 const limeviz_1 = require("./limeviz");
 const math_1 = require("./math");
 const colors_1 = require("./colors");
@@ -310,13 +310,13 @@ function endPath() {
     limeviz_1.lV.commitShape();
 }
 exports.endPath = endPath;
-function closeShape() {
+function closePath() {
     if (!!limeviz_1.lV.ctx) {
         limeviz_1.lV.ctx.closePath();
         limeviz_1.lV.commitShape();
     }
 }
-exports.closeShape = closeShape;
+exports.closePath = closePath;
 function moveTo(x, y) {
     if (!!limeviz_1.lV.ctx)
         limeviz_1.lV.ctx.moveTo(x, y);

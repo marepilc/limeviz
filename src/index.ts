@@ -124,7 +124,7 @@ export {
     bezier,
     beginPath,
     endPath,
-    closeShape,
+    closePath,
     moveTo,
     lineTo,
     bezierTo,

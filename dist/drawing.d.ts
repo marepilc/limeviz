@@ -26,7 +26,7 @@ export declare function spline(pts: number[], tension?: number, closed?: boolean
 export declare function bezier(x1: number, y1: number, cp1x: number, cp1y: number, cp2x: number, cp2y: number, x2: number, y2: number): void;
 export declare function beginPath(x: number, y: number): void;
 export declare function endPath(): void;
-export declare function closeShape(): void;
+export declare function closePath(): void;
 export declare function moveTo(x: number, y: number): void;
 export declare function lineTo(x: number, y: number): void;
 export declare function bezierTo(cp1x: number, cp1y: number, cp2x: number, cp2y: number, x: number, y: number): void;

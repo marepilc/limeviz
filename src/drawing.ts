@@ -315,7 +315,7 @@ export function endPath(): void {
     lV.commitShape()
 }
 
-export function closeShape(): void {
+export function closePath(): void {
     if (!!lV.ctx) {
         lV.ctx.closePath()
         lV.commitShape()
