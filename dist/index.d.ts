@@ -4,7 +4,7 @@ export { round, round2str, floor, ceil, constrain, sq, pow, sqrt, abs, max, min,
 export { text, textSize, fontUnit, textWidth, textDim, textAlign, textBaseline, fontStyle, fontWeight, fontFamily, lineHeight, textOnArc, } from './typography';
 export { print, svg2img } from './utils';
 export { linearScale, ordinalScale } from './scales';
-export { Noise, randomInt, choose, random, shuffle, asc, des, unique, fibonacci } from './numbers';
+export { Noise, randomInt, choose, random, shuffle, asc, desc, unique, fibonacci } from './numbers';
 export { clear, background, stroke, strokeWidth, noStroke, strokeCup, strokeJoin, dashLine, solidLine, fill, noFill, shadow, point, line, arc, circle, ellipse, ring, rect, star, polygon, polyline, spline, bezier, beginPath, endPath, closePath, moveTo, lineTo, bezierTo, quadraticTo, placeImage } from './drawing';
 export { color2rgba, blend, randomColor, CanvasGradient, linearGradient, } from './colors';
 export { number2str, thousandSep, deg2rad, int, str, mm2px, px2mm, hexStr } from './helpers';

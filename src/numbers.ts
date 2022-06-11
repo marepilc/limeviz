@@ -96,7 +96,7 @@ export function asc(a: number, b: number): number {
                     : NaN
 }
 
-export function des(a: number, b: number): number {
+export function desc(a: number, b: number): number {
     return a == null || b == null ? NaN
         : b < a ? -1
             : b > a ? 1

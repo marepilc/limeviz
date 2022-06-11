@@ -1,6 +1,6 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fibonacci = exports.unique = exports.des = exports.asc = exports.shuffle = exports.random = exports.choose = exports.randomInt = exports.Noise = void 0;
+exports.fibonacci = exports.unique = exports.desc = exports.asc = exports.shuffle = exports.random = exports.choose = exports.randomInt = exports.Noise = void 0;
 const math_1 = require("./math");
 class Noise {
     constructor(min, max, noiseRange) {
@@ -92,14 +92,14 @@ function asc(a, b) {
                     : NaN;
 }
 exports.asc = asc;
-function des(a, b) {
+function desc(a, b) {
     return a == null || b == null ? NaN
         : b < a ? -1
             : b > a ? 1
                 : b >= a ? 0
                     : NaN;
 }
-exports.des = des;
+exports.desc = desc;
 function unique(items) {
     return items.filter((value, index, self) => {
         return self.indexOf(value) === index;

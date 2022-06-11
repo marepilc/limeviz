@@ -92,7 +92,7 @@ export {
     random,
     shuffle,
     asc,
-    des,
+    desc,
     unique,
     fibonacci
 } from './numbers'
