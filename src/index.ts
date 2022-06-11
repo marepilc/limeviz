@@ -62,7 +62,7 @@ export {
 
 export {
     text,
-    textSize,
+    fontSize,
     fontUnit,
     textWidth,
     textDim,

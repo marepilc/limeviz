@@ -1,6 +1,6 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.textOnArc = exports.lineHeight = exports.fontFamily = exports.fontWeight = exports.fontStyle = exports.setFont = exports.textBaseline = exports.textAlign = exports.textDim = exports.textWidth = exports.fontUnit = exports.textSize = exports.text = void 0;
+exports.textOnArc = exports.lineHeight = exports.fontFamily = exports.fontWeight = exports.fontStyle = exports.setFont = exports.textBaseline = exports.textAlign = exports.textDim = exports.textWidth = exports.fontUnit = exports.fontSize = exports.text = void 0;
 const math_1 = require("./math");
 const limeviz_1 = require("./limeviz");
 function text(text, x, y) {
@@ -14,7 +14,7 @@ function text(text, x, y) {
     }
 }
 exports.text = text;
-function textSize(size) {
+function fontSize(size) {
     if (size != undefined) {
         limeviz_1.lV.fontSize = size;
         if (!!limeviz_1.lV.ctx) {
@@ -25,7 +25,7 @@ function textSize(size) {
         return limeviz_1.lV.fontSize;
     }
 }
-exports.textSize = textSize;
+exports.fontSize = fontSize;
 function fontUnit(unit) {
     if (!!limeviz_1.lV) {
         limeviz_1.lV.fontUnit = unit;

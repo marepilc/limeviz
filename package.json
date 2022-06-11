@@ -1,6 +1,6 @@
 {
   "name": "limeviz",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Data Visualization Library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

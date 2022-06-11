@@ -16,7 +16,7 @@ export function text(text: string, x: number, y: number): void {
     }
 }
 
-export function textSize(size?: number): void | number {
+export function fontSize(size?: number): void | number {
     if (size != undefined) {
         lV.fontSize = size
         if (!!lV.ctx) {
