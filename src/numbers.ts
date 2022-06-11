@@ -88,7 +88,7 @@ export function shuffle(items: any[]): void {
     }
 }
 
-export function sortAsc(a: number, b: number): number {
+export function asc(a: number, b: number): number {
     return a == null || b == null ? NaN
         : a < b ? -1
             : a > b ? 1
@@ -96,7 +96,7 @@ export function sortAsc(a: number, b: number): number {
                     : NaN
 }
 
-export function sortDes(a: number, b: number): number {
+export function des(a: number, b: number): number {
     return a == null || b == null ? NaN
         : b < a ? -1
             : b > a ? 1

@@ -91,8 +91,8 @@ export {
     choose,
     random,
     shuffle,
-    sortAsc,
-    sortDes,
+    asc,
+    des,
     unique,
     fibonacci
 } from './numbers'
