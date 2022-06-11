@@ -1,4 +1,5 @@
 import { AssetsObject } from './assets';
+import { Vector } from './math';
 declare class Keyboard {
     keyIsPressed: boolean;
     altIsPressed: boolean;
@@ -16,6 +17,8 @@ declare class Mouse {
     private _y;
     private _px;
     private _py;
+    private readonly _pos;
+    private readonly _ppos;
     isPressed: boolean;
     button: number | null;
     wheel: ((e: WheelEvent) => void) | null;
@@ -32,6 +35,8 @@ declare class Mouse {
     get y(): number;
     get px(): number;
     get py(): number;
+    get pos(): Vector;
+    get ppos(): Vector;
 }
 declare class AnimationCtrl {
     private _fps;

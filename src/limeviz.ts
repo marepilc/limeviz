@@ -2,7 +2,7 @@
 
 
 import {preloader, AssetsObject, assetList} from './assets'
-import {round, floor, abs} from './math'
+import {round, floor, abs, Vector} from './math'
 import {setFont} from './typography'
 
 
@@ -55,6 +55,8 @@ class Mouse {
     private _y: number
     private _px: number
     private _py: number
+    private readonly _pos: Vector
+    private readonly _ppos: Vector
     public isPressed: boolean
     public button: number | null
     public wheel: ((e: WheelEvent) => void) | null
@@ -72,6 +74,8 @@ class Mouse {
         this._y = 0
         this._px = 0
         this._py = 0
+        this._pos = new Vector(0, 0)
+        this._ppos = new Vector(0, 0)
         this.isPressed = false
         this.button = null
         this.wheel = null
@@ -128,9 +132,11 @@ class Mouse {
     private _updateMousePos(canvas: HTMLCanvasElement, e: MouseEvent) {
         this._px = this._x
         this._py = this._y
+        this._ppos.set(this._px, this._py)
         let bbox = canvas.getBoundingClientRect()
         this._x = abs(round(e.clientX - bbox.left))
         this._y = abs(round(e.clientY - bbox.top))
+        this._pos.set(this._x, this._y)
     }
 
     get x() {
@@ -147,6 +153,14 @@ class Mouse {
 
     get py() {
         return this._py
+    }
+
+    get pos() {
+        return this._pos
+    }
+
+    get ppos() {
+        return this._ppos
     }
 }
 

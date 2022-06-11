@@ -50,6 +50,8 @@ class Mouse {
         this._y = 0;
         this._px = 0;
         this._py = 0;
+        this._pos = new math_1.Vector(0, 0);
+        this._ppos = new math_1.Vector(0, 0);
         this.isPressed = false;
         this.button = null;
         this.wheel = null;
@@ -107,9 +109,11 @@ class Mouse {
     _updateMousePos(canvas, e) {
         this._px = this._x;
         this._py = this._y;
+        this._ppos.set(this._px, this._py);
         let bbox = canvas.getBoundingClientRect();
         this._x = (0, math_1.abs)((0, math_1.round)(e.clientX - bbox.left));
         this._y = (0, math_1.abs)((0, math_1.round)(e.clientY - bbox.top));
+        this._pos.set(this._x, this._y);
     }
     get x() {
         return this._x;
@@ -122,6 +126,12 @@ class Mouse {
     }
     get py() {
         return this._py;
+    }
+    get pos() {
+        return this._pos;
+    }
+    get ppos() {
+        return this._ppos;
     }
 }
 class AnimationCtrl {
