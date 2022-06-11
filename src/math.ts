@@ -165,7 +165,7 @@ export class Vector {
         return new Vector(this._x + v.x, this._y + v.y)
     }
 
-    public addInPlace(v: Vector): void {
+    public add2(v: Vector): void {
         this._x += v.x
         this._y += v.y
     }
@@ -174,7 +174,7 @@ export class Vector {
         return new Vector(this._x - v.x, this._y - v.y)
     }
 
-    public subInPlace(v: Vector): void {
+    public sub2(v: Vector): void {
         this._x -= v.x
         this._y -= v.y
     }
@@ -183,7 +183,7 @@ export class Vector {
         return new Vector(this._x * s, this._y * s)
     }
 
-    public multInPlace(s: number): void {
+    public mult2(s: number): void {
         this._x *= s
         this._y *= s
     }
@@ -192,7 +192,7 @@ export class Vector {
         return new Vector(this._x / s, this._y / s)
     }
 
-    public divInPlace(s: number): void {
+    public div2(s: number): void {
         this._x /= s
         this._y /= s
     }
@@ -207,7 +207,7 @@ export class Vector {
         return new Vector(e1, e2)
     }
 
-    public normInPlace(): void {
+    public norm2(): void {
         let e1 = this._x / (Math.sqrt(this._x * this._x + this._y * this._y))
         let e2 = this._y / (Math.sqrt(this._x * this._x + this._y * this._y))
         this._x = e1

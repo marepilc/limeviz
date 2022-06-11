@@ -156,28 +156,28 @@ class Vector {
     add(v) {
         return new Vector(this._x + v.x, this._y + v.y);
     }
-    addInPlace(v) {
+    add2(v) {
         this._x += v.x;
         this._y += v.y;
     }
     sub(v) {
         return new Vector(this._x - v.x, this._y - v.y);
     }
-    subInPlace(v) {
+    sub2(v) {
         this._x -= v.x;
         this._y -= v.y;
     }
     mult(s) {
         return new Vector(this._x * s, this._y * s);
     }
-    multInPlace(s) {
+    mult2(s) {
         this._x *= s;
         this._y *= s;
     }
     div(s) {
         return new Vector(this._x / s, this._y / s);
     }
-    divInPlace(s) {
+    div2(s) {
         this._x /= s;
         this._y /= s;
     }
@@ -189,7 +189,7 @@ class Vector {
         let e2 = this._y / (Math.sqrt(this._x * this._x + this._y * this._y));
         return new Vector(e1, e2);
     }
-    normInPlace() {
+    norm2() {
         let e1 = this._x / (Math.sqrt(this._x * this._x + this._y * this._y));
         let e2 = this._y / (Math.sqrt(this._x * this._x + this._y * this._y));
         this._x = e1;
