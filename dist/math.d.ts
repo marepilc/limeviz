@@ -26,6 +26,7 @@ export declare class Vector {
     get y(): number;
     set x(v: number);
     set y(v: number);
+    get xy(): [number, number];
     copy(): Vector;
     add(v: Vector): Vector;
     add2(v: Vector): void;

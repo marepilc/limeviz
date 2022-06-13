@@ -157,6 +157,10 @@ export class Vector {
         this._y = v
     }
 
+    public get xy(): [number, number] {
+        return [this._x, this._y]
+    }
+
     public copy(): Vector {
         return new Vector(this._x, this._y)
     }

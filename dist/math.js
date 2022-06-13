@@ -150,6 +150,9 @@ class Vector {
     set y(v) {
         this._y = v;
     }
+    get xy() {
+        return [this._x, this._y];
+    }
     copy() {
         return new Vector(this._x, this._y);
     }
