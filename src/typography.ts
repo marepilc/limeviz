@@ -5,6 +5,12 @@ import {HALF_PI, PI, max} from './math';
 import {lV, restore, save, LengthUnit} from './limeviz'
 
 
+/**
+ * This function place a text on the canvas.
+ * @param text
+ * @param x X coordinate of the text's anchor point.
+ * @param y Y coordinate of the text's anchor point.
+ */
 export function text(text: string, x: number, y: number): void {
     let lines = text.split('\n')
     let lineY = y
@@ -16,6 +22,11 @@ export function text(text: string, x: number, y: number): void {
     }
 }
 
+/**
+ * This function changes the size of the font if called with size argument.
+ * If function is called without an argument, it returns the current font size.
+ * @param size Font size.
+ */
 export function fontSize(size?: number): void | number {
     if (size != undefined) {
         lV.fontSize = size
@@ -27,12 +38,20 @@ export function fontSize(size?: number): void | number {
     }
 }
 
+/**
+ * This function sets the units for the typography.
+ * @param unit
+ */
 export function fontUnit(unit: LengthUnit): void {
     if (!!lV) {
         lV.fontUnit = unit
     }
 }
 
+/**
+ * This function returns the text width.
+ * @param text
+ */
 export function textWidth(text: string): number {
     if (!!lV.ctx) {
         return lV.ctx.measureText(text).width
@@ -41,6 +60,10 @@ export function textWidth(text: string): number {
     }
 }
 
+/**
+ * This function returns an object with the text dimensions.
+ * @param text
+ */
 export function textDim(text: string): {
     w: number,
     h: number
@@ -61,23 +84,38 @@ export function textDim(text: string): {
     };
 }
 
-type TextAlign = 'left' | 'right' | 'center' | 'start' | 'end'
-type TextBaseline = 'top' | 'middle' | 'alphabetic' | 'hanging' | 'ideographic' | 'bottom'
+export type TextAlign = 'left' | 'right' | 'center' | 'start' | 'end'
+export type TextBaseline = 'top' | 'middle' | 'alphabetic' | 'hanging' | 'ideographic' | 'bottom'
 
+/**
+ * This function defines an alignment of the text.
+ * @param alignment
+ */
 export function textAlign(alignment: TextAlign): void {
     if (!!lV.ctx) lV.ctx.textAlign = alignment
 }
 
+/**
+ * This function defines a baseline of the text.
+ * @param baseline
+ */
 export function textBaseline(baseline: TextBaseline): void {
     if (!!lV.ctx) lV.ctx.textBaseline = baseline
 }
 
+/**
+ * @ignore
+ */
 export function setFont(): void {
     if (!!lV.ctx) {
         lV.ctx.font = `${lV.fontStyle} ${lV.fontWeight} ${lV.fontSize}${lV.fontUnit} ${lV.fontFamily}`
     }
 }
 
+/**
+ * This function sets the style of the font according to the CSS property.
+ * @param style
+ */
 export function fontStyle(style?: string): void | string {
     if (style) {
         lV.fontStyle = style
@@ -89,6 +127,11 @@ export function fontStyle(style?: string): void | string {
     }
 }
 
+/**
+ * This function changes the font weight if called with weight argument.
+ * If function is called without an argument, it returns the current font weight.
+ * @param weight
+ */
 export function fontWeight(weight?: string): void | string {
     if (weight) {
         lV.fontWeight = weight
@@ -100,6 +143,11 @@ export function fontWeight(weight?: string): void | string {
     }
 }
 
+/**
+ * This function changes the font family if called with family argument.
+ * If function is called without an argument, it returns the current font family.
+ * @param family
+ */
 export function fontFamily(family?: string): void | string {
     if (family) {
         lV.fontFamily = family
@@ -111,6 +159,11 @@ export function fontFamily(family?: string): void | string {
     }
 }
 
+/**
+ * This function checks or sets the line height for multiline text.
+ * The default value is 1.1. If cunction is called without argument, the curent value is returned.
+ * @param height
+ */
 export function lineHeight(height?: number): void | number {
     if (height != undefined) {
         lV.lineHeight = height
@@ -119,6 +172,18 @@ export function lineHeight(height?: number): void | number {
     }
 }
 
+/**
+ * This function places the text on arc and return an angle in radians at which the text ends on the arc.
+ * @param text
+ * @param x X coordinate of the arc center.
+ * @param y Y coordinate of the arc center.
+ * @param r Radius of the arc.
+ * @param startAngle Start angle in radians.
+ * @param align Alignment of the text (default 'center'.)
+ * @param outside If `true` (default value) the text is placed outside the arc.
+ * @param inward Defines text direction (default `true`.)
+ * @param kerning Defines text kerning (default `0`.)
+ */
 export function textOnArc(text: string, x: number, y: number, r: number, startAngle: number,
                           align: TextAlign = 'center', outside: boolean = true,
                           inward: boolean = true, kerning: number = 0): number {

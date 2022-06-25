@@ -11,7 +11,14 @@ export interface AssetsItem {
 
 export let assetList: AssetsItem[] = []
 
-class Preloader {
+/**
+ * The `Preloader` class is used to preload assets to the visualization.
+ * This class works with the still images stored as 'svg', 'png' or 'jpg' files,
+ * and also with the data in the *JSON* format.
+ * User should not to use this class directly. It is use by the `LimeViz` library
+ * behind the scene, when {@link loadAssets} and {@link addAsset} functions are used.
+ */
+export class Preloader {
     public assets: any
     public onProgress: () => void
     public onComplete: () => void
@@ -128,6 +135,22 @@ class Preloader {
 
 export let preloader: Preloader = new Preloader()
 
+/**
+ * This function preloads still image from ('svg', 'png' or 'jpg') and data
+ * form the JSON file. This function can be used only inside user defined `loadAssets` function,
+ * which is passed as a forth parameter to the {@link lvStart} function.
+ *
+ * #### Usage example
+ *
+ * ```typescript
+ * lvStart(setup, draw, null, loadAssets)
+ *
+ * function loadAssets(): void {
+ *     addAsset({id: 'myImage', src: '../img/my_image.png'})
+ * }
+ * ```
+ * @param asset Object with an asset `id` and `src` (source path)
+ */
 export function addAsset(asset: AssetsItem): void {
     assetList.push(asset)
 }

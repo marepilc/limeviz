@@ -13,17 +13,23 @@ interface ColorRGB {
     b: number
 }
 
-export function color2rgba(v: number[] | string | number, alpha: number=1): string {
+/**
+ * This function converts color to the `rgba` string
+ * @param c Color. It can be provided as an array with RGB values between 0 and 255,
+ * hex string or single number for the gray color.
+ * @param alpha Transparency - value between 0 and 1
+ */
+export function color2rgba(c: number[] | string | number, alpha: number=1): string {
     let r: number
     let g: number
     let b: number
     let a: number
-    switch (typeof v) {
+    switch (typeof c) {
         case 'object':
-            if (Array.isArray(v) && v.length === 3) {
-                r = constrain(v[0], 0, 255)
-                g = constrain(v[1], 0, 255)
-                b = constrain(v[2], 0, 255)
+            if (Array.isArray(c) && c.length === 3) {
+                r = constrain(c[0], 0, 255)
+                g = constrain(c[1], 0, 255)
+                b = constrain(c[2], 0, 255)
                 a = constrain(alpha, 0, 1)
             } else {
                 r = g = b = 0
@@ -31,11 +37,11 @@ export function color2rgba(v: number[] | string | number, alpha: number=1): stri
             }
             break
         case 'number':
-            r = g = b = constrain(v as number, 0, 255)
+            r = g = b = constrain(c as number, 0, 255)
             a = constrain(alpha, 0, 1)
             break
         case 'string':
-            let rgb = str2rgb(v as string)
+            let rgb = str2rgb(c as string)
             r = rgb.r
             g = rgb.g
             b = rgb.b
@@ -65,6 +71,12 @@ function str2rgb(col: string): ColorRGB {
     return rgb
 }
 
+/**
+ * This function can be used to mix together two colors with given proportion.
+ * @param color1
+ * @param color2
+ * @param proportion Blending proportion (between `0` and `1`.)
+ */
 export function blend(color1: string, color2: string, proportion: number): string {
     proportion = constrain(proportion, 0, 1)
     let c1 = (color1.indexOf('#') === 0) ? color1 : '#' + color1
@@ -94,6 +106,9 @@ export function blend(color1: string, color2: string, proportion: number): strin
     }
 }
 
+/**
+ * This function generates the random color.
+ */
 export function randomColor(): string {
     let r: string = hexStr(randomInt(0, 255))
     let g: string = hexStr(randomInt(0, 255))
@@ -101,10 +116,27 @@ export function randomColor(): string {
     return '#' + r + g + b
 }
 
+
 export interface CanvasGradient {
     addColorStop(offset: number, color: string): void
 }
 
+/**
+ * You can use this function to create the linear gradient between two points.
+ * To add colors to the gradient, use the addColorStop function (see example below.)
+ *
+ * ```typescript
+ * const gradient = linearGradient(0, 0, 300, 0)
+ * gradient.addColorStop(0, '#6a9122')
+ * gradient.addColorStop(xScale(animation.currentFrame % 300), '#912222')
+ * gradient.addColorStop(1, '#227791')
+ * fill(gradient)
+ * ```
+ * @param x0 X coordinate of the start point
+ * @param y0 Y coordinate of the start point
+ * @param x1 X coordinate of the end point
+ * @param y1 Y coordinate of the end point
+ */
 export function linearGradient(x0: number, y0: number, x1: number, y1: number): CanvasGradient {
     if (!!lV.ctx) {
         return  lV.ctx.createLinearGradient(x0, y0, x1, y1)

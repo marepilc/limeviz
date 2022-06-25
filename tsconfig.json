@@ -100,5 +100,15 @@
   },
   "include": [
     "src/**/*"
-  ]
+  ],
+  "typedocOptions": {
+    "entryPoints": ["src/index.ts"],
+    "out": "docs",
+    "theme": "default",
+    "customCss": "./docsAssets/css/style.css",
+    "includeVersion": false,
+    "hideGenerator": true,
+    "excludePrivate": true,
+    "name": "LimeViz"
+  }
 }
